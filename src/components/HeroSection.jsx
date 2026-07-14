@@ -1,19 +1,21 @@
 import { motion } from "framer-motion";
 import { SITE } from "../content";
-import { fadeUp, blurIn, slideFromLeft, slideFromRight } from "../utils/animations";
+import { fadeUp, blurIn, slideFromRight } from "../utils/animations";
 
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Cinematic gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-ink via-ink to-[#0f0d0a]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/40 to-transparent" />
-
-      {/* Subtle gold ambient light */}
+      {/* Soft rose glow accents */}
       <div
-        className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full opacity-[0.03]"
+        className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full opacity-30 blur-3xl"
         style={{
-          background: "radial-gradient(circle, var(--gold) 0%, transparent 70%)",
+          background: "radial-gradient(circle, var(--rose) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute bottom-1/4 left-0 w-[500px] h-[500px] rounded-full opacity-20 blur-3xl"
+        style={{
+          background: "radial-gradient(circle, var(--dusty) 0%, transparent 70%)",
         }}
       />
 
@@ -30,32 +32,32 @@ export default function HeroSection() {
           >
             <motion.p
               variants={fadeUp}
-              className="text-xs font-sans uppercase tracking-editorial text-warmGray mb-6"
+              className="text-xs font-sans uppercase tracking-editorial text-mauve mb-6"
             >
               Hola, soy
             </motion.p>
 
             <motion.h1
               variants={blurIn}
-              className="font-serif text-display-xl font-light text-ivory mb-4"
+              className="font-serif text-display-xl font-light text-plum mb-4"
             >
               Tamara
               <br />
-              <span className="text-gold italic">González</span>
+              <span className="text-dusty italic">González</span>
             </motion.h1>
 
-            <motion.div variants={fadeUp} className="gold-divider mb-8" />
+            <motion.div variants={fadeUp} className="rose-divider mb-8" />
 
             <motion.p
               variants={fadeUp}
-              className="text-sm uppercase tracking-editorial text-warmGray mb-8"
+              className="text-sm uppercase tracking-editorial text-mauve mb-8"
             >
               {SITE.role}
             </motion.p>
 
             <motion.p
               variants={fadeUp}
-              className="text-base text-warmGray/80 leading-relaxed max-w-md mb-12"
+              className="text-base text-plumSoft leading-relaxed max-w-md mb-12"
             >
               Transformo ideas en estrategias digitales con propósito,
               construyendo presencias de marca que conectan y generan resultados.
@@ -64,7 +66,7 @@ export default function HeroSection() {
             <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
               <a
                 href="#portfolio"
-                className="group inline-flex items-center gap-3 px-8 py-4 border border-gold/40 text-gold text-xs uppercase tracking-editorial hover:bg-gold/10 transition-all duration-500"
+                className="group inline-flex items-center gap-3 px-8 py-4 rounded-full glass text-mauve text-xs uppercase tracking-editorial hover:shadow-glass-lg transition-all duration-500"
               >
                 Ver Portfolio
                 <span className="inline-block group-hover:translate-x-1 transition-transform duration-300">
@@ -75,14 +77,14 @@ export default function HeroSection() {
                 href={SITE.cvUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4 border border-white/10 text-ivory/70 text-xs uppercase tracking-editorial hover:border-white/25 hover:text-ivory transition-all duration-500"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-mauve/25 text-plumSoft text-xs uppercase tracking-editorial hover:border-mauve/50 hover:text-plum transition-all duration-500"
               >
                 Descargar CV
               </a>
             </motion.div>
           </motion.div>
 
-          {/* Right: Photo placeholder */}
+          {/* Right: Photo placeholder (glass) */}
           <motion.div
             initial="hidden"
             animate="visible"
@@ -90,18 +92,15 @@ export default function HeroSection() {
             className="relative flex justify-center lg:justify-end"
           >
             <div className="relative w-full max-w-md lg:max-w-lg aspect-[3/4]">
-              {/* Photo container with integrated shadows */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#1a1815] to-[#0d0c0a] overflow-hidden">
+              <div className="absolute inset-0 rounded-[2rem] glass overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-serif text-8xl text-gold/10 italic select-none">
+                  <span className="font-serif text-[10rem] text-mauve/20 italic select-none">
                     T
                   </span>
                 </div>
               </div>
-              {/* Edge blending */}
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-ink/60" />
-              <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-ink to-transparent" />
-              <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-ink to-transparent" />
+              {/* Soft accent corner */}
+              <div className="absolute -bottom-4 -right-4 w-28 h-28 rounded-br-[2rem] border-r border-b border-dusty/40" />
             </div>
           </motion.div>
         </div>
@@ -114,13 +113,13 @@ export default function HeroSection() {
         transition={{ delay: 2, duration: 1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        <span className="text-[10px] uppercase tracking-editorial text-warmGray/40">
+        <span className="text-[10px] uppercase tracking-editorial text-mauve/50">
           Scroll
         </span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="w-px h-8 bg-gradient-to-b from-gold/40 to-transparent"
+          className="w-px h-8 bg-gradient-to-b from-dusty/60 to-transparent"
         />
       </motion.div>
     </section>

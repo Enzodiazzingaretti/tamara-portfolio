@@ -9,10 +9,13 @@ import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="relative min-h-screen bg-ink text-ivory overflow-x-hidden">
-      {/* RA watermark */}
-      <div className="ra-watermark" aria-hidden="true">
-        RA
+    <div className="relative min-h-screen text-plum overflow-x-hidden">
+      {/* Fixed dusty-pink mesh background */}
+      <div className="bg-mesh" aria-hidden="true" />
+
+      {/* Rabbit Studio watermark */}
+      <div className="rs-watermark" aria-hidden="true">
+        R
       </div>
 
       <Navbar />

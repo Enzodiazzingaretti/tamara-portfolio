@@ -33,14 +33,14 @@ export default function Navbar() {
         transition={{ duration: 0.8, delay: 0.3 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
           scrolled
-            ? "bg-ink/90 backdrop-blur-md border-b border-white/5"
+            ? "glass-strong border-b border-white/50"
             : "bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
           <a
             href="#"
-            className="font-serif text-xl tracking-wide text-ivory hover:text-gold transition-colors duration-500"
+            className="font-serif text-xl tracking-wide text-plum hover:text-mauve transition-colors duration-500"
           >
             Tamara González
           </a>
@@ -51,7 +51,7 @@ export default function Navbar() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="text-xs font-sans uppercase tracking-editorial text-warmGray hover:text-gold transition-colors duration-500"
+                  className="text-xs font-sans uppercase tracking-editorial text-plumSoft hover:text-mauve transition-colors duration-500"
                 >
                   {link.label}
                 </a>
@@ -62,7 +62,7 @@ export default function Navbar() {
           {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden text-ivory hover:text-gold transition-colors"
+            className="md:hidden text-plum hover:text-mauve transition-colors"
             aria-label="Menu"
           >
             {open ? <X size={22} /> : <Menu size={22} />}
@@ -78,7 +78,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-40 bg-ink/98 backdrop-blur-xl flex items-center justify-center"
+            className="fixed inset-0 z-40 glass-strong flex items-center justify-center"
           >
             <motion.ul
               initial="hidden"
@@ -100,7 +100,7 @@ export default function Navbar() {
                   <a
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="font-serif text-3xl text-ivory hover:text-gold transition-colors duration-500"
+                    className="font-serif text-3xl text-plum hover:text-mauve transition-colors duration-500"
                   >
                     {link.label}
                   </a>

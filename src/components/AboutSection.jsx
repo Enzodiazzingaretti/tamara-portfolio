@@ -18,15 +18,15 @@ export default function AboutSection() {
             variants={slideFromLeft}
             className="relative"
           >
-            <div className="aspect-[4/5] bg-gradient-to-br from-[#1a1815] to-[#0d0c0a] overflow-hidden">
+            <div className="aspect-[4/5] rounded-[2rem] glass overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="font-serif text-9xl text-gold/5 italic select-none">
+                <span className="font-serif text-9xl text-mauve/15 italic select-none">
                   TG
                 </span>
               </div>
             </div>
-            {/* Gold accent corner */}
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 border-r border-b border-gold/20" />
+            {/* Accent corner */}
+            <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-br-[2rem] border-r border-b border-dusty/40" />
           </motion.div>
 
           {/* Text */}
@@ -40,16 +40,16 @@ export default function AboutSection() {
           >
             <motion.p
               variants={fadeUp}
-              className="font-serif text-display-md font-light text-ivory/90 mb-8 leading-snug"
+              className="font-serif text-display-md font-light text-plum mb-8 leading-snug"
             >
               {ABOUT.intro}
             </motion.p>
 
-            <motion.div variants={fadeUp} className="gold-divider mb-8" />
+            <motion.div variants={fadeUp} className="rose-divider mb-8" />
 
             <motion.p
               variants={fadeUp}
-              className="text-sm text-warmGray leading-loose"
+              className="text-sm text-plumSoft leading-loose"
             >
               {ABOUT.body}
             </motion.p>

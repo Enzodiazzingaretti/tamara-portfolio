@@ -52,42 +52,64 @@ export const SPECIALTIES = [
   },
 ];
 
+// Cada proyecto tiene `concept: true` cuando es una pieza demostrativa (no un
+// cliente real). Reemplazá `images` con las rutas de los mockups reales cuando
+// los tengas (ej. "/projects/renacer/1.webp") y poné `concept: false` si es
+// trabajo real de un cliente.
 export const PROJECTS = [
   {
-    id: "marca-cosmética",
+    id: "marca-cosmetica",
     name: "Renacer Cosmética",
     category: "Branding & Social Media",
+    concept: true,
     problem:
       "Una marca de cosmética natural necesitaba posicionarse en un mercado saturado, sin identidad digital clara ni estrategia de contenido.",
     solution:
       "Desarrollé una estrategia integral de contenido con identidad visual cohesiva, calendario editorial mensual y gestión de comunidad activa en Instagram y TikTok.",
     result:
-      "Crecimiento de 340% en seguidores en 3 meses. Engagement rate del 8.2%, superando el promedio de la industria.",
+      "El concepto proyecta un crecimiento sostenido de comunidad y un engagement por encima del promedio de la industria mediante contenido de valor y constancia editorial.",
+    highlights: [
+      { value: "+340%", label: "seguidores proyectados" },
+      { value: "8.2%", label: "engagement objetivo" },
+    ],
     tags: ["Instagram", "TikTok", "Branding", "Content Strategy"],
+    images: [],
   },
   {
     id: "estudio-yoga",
     name: "Alma Studio",
     category: "Community Management",
+    concept: true,
     problem:
       "Un estudio de yoga boutique quería digitalizar su comunicación y construir una comunidad online que reflejara la experiencia presencial.",
     solution:
       "Creación de contenido audiovisual editorial, stories interactivos diarios y campañas de paid media segmentadas por zona geográfica.",
     result:
-      "Duplicación de reservas online. Comunidad activa de más de 2.000 miembros con un 92% de retención mensual.",
+      "El plan apunta a duplicar reservas online y sostener una comunidad activa con alta retención mensual a través de contenido cercano y experiencial.",
+    highlights: [
+      { value: "x2", label: "reservas online (objetivo)" },
+      { value: "92%", label: "retención proyectada" },
+    ],
     tags: ["Community", "Paid Media", "Content Creation"],
+    images: [],
   },
   {
     id: "restaurante-premium",
     name: "Casa Piedra",
     category: "Marketing Digital",
+    concept: true,
     problem:
       "Un restaurante de alta gama necesitaba renovar su presencia digital manteniendo la exclusividad de su marca.",
     solution:
       "Rediseño completo de la estrategia digital: fotografía gastronómica profesional, copywriting editorial y campaña de influencers locales.",
     result:
-      "Incremento del 180% en reservas a través de redes sociales. Aumento del 65% en alcance orgánico.",
+      "El concepto busca aumentar las reservas vía redes y ampliar el alcance orgánico manteniendo una estética premium coherente con la marca.",
+    highlights: [
+      { value: "+180%", label: "reservas vía redes (objetivo)" },
+      { value: "+65%", label: "alcance orgánico" },
+    ],
     tags: ["Strategy", "Influencer Marketing", "Photography"],
+    images: [],
   },
 ];
 

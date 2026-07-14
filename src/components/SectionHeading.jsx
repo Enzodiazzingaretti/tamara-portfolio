@@ -15,18 +15,18 @@ export default function SectionHeading({ label, title, align = "left" }) {
       {label && (
         <motion.span
           variants={fadeUp}
-          className="text-[11px] font-sans uppercase tracking-editorial text-gold mb-4"
+          className="text-[11px] font-sans uppercase tracking-editorial text-mauve mb-4"
         >
           {label}
         </motion.span>
       )}
       <motion.h2
         variants={fadeUp}
-        className="font-serif text-display-lg font-light text-ivory"
+        className="font-serif text-display-lg font-light text-plum"
       >
         {title}
       </motion.h2>
-      <motion.div variants={fadeUp} className="gold-divider mt-6" />
+      <motion.div variants={fadeUp} className="rose-divider mt-6" />
     </motion.div>
   );
 }
