@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 — Kexxy Portfolio</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        background: #050505;
+        color: #EAEAEA;
+        font-family: Arial Narrow, Arial, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        text-align: center;
+        padding: 2rem;
+      }
+      .code {
+        font-size: clamp(5rem, 20vw, 12rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.06em;
+        color: #111;
+      }
+      .label {
+        font-family: monospace;
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.3);
+      }
+      .dot { color: #8B0000; }
+      a {
+        font-family: monospace;
+        font-size: 10px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.5);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(139,0,0,0.4);
+        padding-bottom: 2px;
+        transition: color 200ms;
+      }
+      a:hover { color: #fff; }
+    </style>
+    <script>
+      // Redirect to the portfolio after 3 seconds
+      setTimeout(() => {
+        window.location.href = "/kexxy-portfolio/";
+      }, 3000);
+    </script>
+  </head>
+  <body>
+    <p class="code">4<span class="dot">0</span>4</p>
+    <p class="label">Página no encontrada</p>
+    <a href="/kexxy-portfolio/">← Volver al portfolio</a>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────
+   BASE
+───────────────────────────────────────── */
+:root {
+  --ink: #090909;
+  --ivory: #F5F1EB;
+  --warm-gray: #A8A29E;
+  --gold: #B89B6A;
+  --gold-light: #D4BC8A;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: var(--ink);
+  color: var(--ivory);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+/* ─────────────────────────────────────────
+   TYPOGRAPHY
+───────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 300;
+  color: var(--ivory);
+}
+
+/* ─────────────────────────────────────────
+   GOLD DIVIDER
+───────────────────────────────────────── */
+.gold-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+.gold-divider-wide {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.4;
+}
+
+/* ─────────────────────────────────────────
+   SECTION SPACING
+───────────────────────────────────────── */
+.section-padding {
+  padding: 10rem 0;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 5rem 0;
+  }
+}
+
+/* ─────────────────────────────────────────
+   SCROLLBAR
+───────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+/* ─────────────────────────────────────────
+   RA WATERMARK
+───────────────────────────────────────── */
+.ra-watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(20rem, 30vw, 40rem);
+  font-weight: 300;
+  color: var(--ivory);
+  opacity: 0.015;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  letter-spacing: 0.05em;
+}
