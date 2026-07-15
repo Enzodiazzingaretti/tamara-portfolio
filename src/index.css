@@ -3,17 +3,18 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────
-   BASE — dusty pink glass theme
+   BASE — dark romantic luxury
 ───────────────────────────────────────── */
 :root {
-  --blush: #F5E7EA;
-  --cream: #FBF4F3;
-  --petal: #EAD1D7;
-  --dusty: #CBA0A8;
-  --rose: #D9A6B0;
-  --mauve: #9B6B77;
-  --plum: #43333A;
-  --plum-soft: #705A62;
+  --noir: #0D0709;
+  --wine: #160C10;
+  --burgundy: #241017;
+  --plum: #3A1D28;
+  --dusty: #CFA3AB;
+  --rose: #DDAEB6;
+  --rose-gold: #C39A8D;
+  --cream: #ECE0DB;
+  --mauve: #93707B;
 }
 
 * {
@@ -30,15 +31,15 @@ html {
 
 body {
   font-family: "Inter", system-ui, sans-serif;
-  background: var(--blush);
-  color: var(--plum);
+  background: var(--noir);
+  color: var(--cream);
   overflow-x: hidden;
   line-height: 1.7;
 }
 
 ::selection {
   background: var(--dusty);
-  color: var(--cream);
+  color: var(--noir);
 }
 
 /* ─────────────────────────────────────────
@@ -47,48 +48,53 @@ body {
 h1, h2, h3, h4 {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 300;
-  color: var(--plum);
+  color: var(--cream);
 }
 
 /* ─────────────────────────────────────────
-   MESH BACKGROUND (fixed, behind everything)
+   ATMOSPHERE BACKGROUND (fixed, moody)
 ───────────────────────────────────────── */
-.bg-mesh {
+.bg-atmosphere {
   position: fixed;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(58% 50% at 12% 8%, rgba(217, 166, 176, 0.55), transparent 62%),
-    radial-gradient(50% 45% at 88% 12%, rgba(234, 209, 215, 0.65), transparent 60%),
-    radial-gradient(55% 55% at 78% 88%, rgba(203, 160, 168, 0.45), transparent 62%),
-    radial-gradient(48% 48% at 8% 92%, rgba(240, 222, 212, 0.5), transparent 60%),
-    linear-gradient(160deg, #FBF4F3 0%, #F1DDE2 55%, #ECD2D9 100%);
+    radial-gradient(60% 45% at 82% 4%, rgba(96, 32, 50, 0.45), transparent 60%),
+    radial-gradient(65% 55% at 12% 100%, rgba(64, 22, 38, 0.4), transparent 60%),
+    var(--noir);
 }
 
 /* ─────────────────────────────────────────
-   GLASS SURFACES
+   GLASS SURFACES (dark frosted)
 ───────────────────────────────────────── */
+/* Cards use a solid-ish translucent panel (no backdrop-filter) — on a dark,
+   near-uniform background the real blur is imperceptible but very costly to
+   composite across many elements. Real backdrop blur is reserved for the
+   navbar/overlay (.glass-strong), which sits over scrolling content. */
 .glass {
-  background: rgba(255, 255, 255, 0.42);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  box-shadow: 0 8px 32px rgba(120, 80, 90, 0.10);
+  background: rgba(30, 14, 20, 0.6);
+  border: 1px solid rgba(207, 163, 171, 0.14);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
 }
 
 .glass-soft {
-  background: rgba(255, 255, 255, 0.26);
-  backdrop-filter: blur(12px) saturate(130%);
-  -webkit-backdrop-filter: blur(12px) saturate(130%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(58, 29, 40, 0.3);
+  border: 1px solid rgba(207, 163, 171, 0.1);
 }
 
 .glass-strong {
-  background: rgba(251, 244, 243, 0.72);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 10px 40px rgba(120, 80, 90, 0.12);
+  background: rgba(13, 7, 9, 0.72);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  border: 1px solid rgba(207, 163, 171, 0.12);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* dark image placeholder for galleries */
+.art-placeholder {
+  background:
+    radial-gradient(80% 70% at 30% 20%, rgba(120, 44, 66, 0.4), transparent 60%),
+    linear-gradient(155deg, #2A1018 0%, #160B10 60%, #0D0709 100%);
 }
 
 /* ─────────────────────────────────────────
@@ -98,26 +104,31 @@ h1, h2, h3, h4 {
   width: 60px;
   height: 1px;
   background: var(--dusty);
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
 .rose-divider-wide {
   width: 120px;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--dusty), transparent);
-  opacity: 0.5;
+  opacity: 0.45;
+}
+
+.hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(207, 163, 171, 0.22), transparent);
 }
 
 /* ─────────────────────────────────────────
    SECTION SPACING
 ───────────────────────────────────────── */
 .section-padding {
-  padding: 10rem 0;
+  padding: 7rem 0;
 }
 
 @media (max-width: 768px) {
   .section-padding {
-    padding: 5rem 0;
+    padding: 4rem 0;
   }
 }
 
@@ -129,30 +140,10 @@ h1, h2, h3, h4 {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--noir);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--dusty);
+  background: var(--plum);
   border-radius: 3px;
-}
-
-/* ─────────────────────────────────────────
-   RABBIT STUDIO WATERMARK
-───────────────────────────────────────── */
-.rs-watermark {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(18rem, 28vw, 38rem);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--mauve);
-  opacity: 0.04;
-  pointer-events: none;
-  z-index: 0;
-  user-select: none;
-  letter-spacing: 0.05em;
 }

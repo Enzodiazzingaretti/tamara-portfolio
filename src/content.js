@@ -1,158 +1,89 @@
 export const SITE = {
   name: "Tamara González",
-  role: "Marketing Digital & Community Management",
-  email: "tamara.gonzalez@email.com",
-  linkedin: "https://linkedin.com/in/tamara-gonzalez",
-  instagram: "https://instagram.com/tamara.mkt",
-  cvUrl: "/cv-tamara-gonzalez.pdf",
+  role: "Artista Visual",
+  essence: "El arte como refugio, memoria y transformación.",
+  // Reemplazá por el número real. whatsappUrl usa solo dígitos (formato internacional).
+  whatsapp: "+54 11 1234 5678",
+  whatsappUrl: "https://wa.me/5491112345678",
+  location: "Buenos Aires, Argentina",
+  domain: "tamaragonzalez.com",
+  instagram: "https://instagram.com/tamara.arte",
+  behance: "https://behance.net/tamaragonzalez",
+  pinterest: "https://pinterest.com/tamaragonzalez",
 };
 
 export const ABOUT = {
   intro:
-    "Soy una profesional apasionada por la comunicación estratégica, el diseño visual y la creación de experiencias digitales que conectan con las personas.",
-  body: "Mi enfoque combina creatividad, organización y una visión centrada en resultados. Creo firmemente que cada marca tiene una historia única que merece ser contada con intención y estética. Me especializo en traducir objetivos de negocio en estrategias de contenido coherentes, construyendo presencias digitales que generan confianza y comunidad.",
+    "Soy artista visual. Trabajo entre el tatuaje, la ilustración y la pintura, buscando en cada pieza una forma de contar historias que perduran.",
+  body: "Mi obra explora la memoria, la emoción y la transformación. Creo que el arte es un refugio: un lugar donde las ideas encuentran cuerpo y las marcas encuentran una voz auténtica. Combino sensibilidad estética con una mirada estratégica para acompañar proyectos desde la idea hasta su ejecución.",
 };
 
-export const SPECIALTIES = [
+// Trabajos seleccionados — galerías. Poné la ruta del cover en `image`
+// (ej. "/trabajos/tatuajes.webp") cuando tengas las fotos reales.
+export const CATEGORIES = [
+  { id: "tatuajes", title: "Tatuajes", subtitle: "Ilustración", image: "" },
+  { id: "pinturas", title: "Pinturas", subtitle: "Pintura", image: "" },
+  { id: "dibujos", title: "Dibujos", subtitle: "Dibujo", image: "" },
+  { id: "foto", title: "Foto mía", subtitle: "Fotografía", image: "" },
+];
+
+export const SERVICES = [
   {
-    title: "Gestión de Redes Sociales",
+    title: "Marketing & Branding",
     description:
-      "Planificación, creación y administración integral de perfiles en las principales plataformas digitales.",
-    icon: "Share2",
+      "Estrategias creativas que conectan marcas con personas y generan impacto.",
+    icon: "Sparkle",
   },
   {
-    title: "Planificación de Contenidos",
+    title: "Ilustración",
     description:
-      "Calendarios editoriales estratégicos alineados con los objetivos de marca y las tendencias del mercado.",
-    icon: "CalendarDays",
+      "Ilustraciones personalizadas que comunican ideas con belleza y propósito.",
+    icon: "Flower2",
   },
   {
-    title: "Marketing Digital",
+    title: "Pintura",
     description:
-      "Estrategias orientadas a resultados que integran paid media, orgánico y análisis de datos.",
-    icon: "TrendingUp",
+      "Obras originales que exploran la memoria, la emoción y la transformación.",
+    icon: "Hexagon",
   },
   {
-    title: "Copywriting",
+    title: "Apartado de C.M.",
     description:
-      "Textos persuasivos que capturan la voz de cada marca y generan engagement auténtico.",
-    icon: "PenTool",
-  },
-  {
-    title: "Diseño para Redes",
-    description:
-      "Piezas visuales que respetan la identidad de marca y maximizan el impacto en cada plataforma.",
-    icon: "Palette",
-  },
-  {
-    title: "Análisis de Resultados",
-    description:
-      "Reportes claros y accionables para optimizar el rendimiento de cada estrategia implementada.",
-    icon: "BarChart3",
+      "Gestión de redes sociales con identidad, estrategia y contenido coherente.",
+    icon: "Sparkles",
   },
 ];
 
-// Cada proyecto tiene `concept: true` cuando es una pieza demostrativa (no un
-// cliente real). Reemplazá `images` con las rutas de los mockups reales cuando
-// los tengas (ej. "/projects/renacer/1.webp") y poné `concept: false` si es
-// trabajo real de un cliente.
-export const PROJECTS = [
+export const PROCESS = [
   {
-    id: "marca-cosmetica",
-    name: "Renacer Cosmética",
-    category: "Branding & Social Media",
-    concept: true,
-    problem:
-      "Una marca de cosmética natural necesitaba posicionarse en un mercado saturado, sin identidad digital clara ni estrategia de contenido.",
-    solution:
-      "Desarrollé una estrategia integral de contenido con identidad visual cohesiva, calendario editorial mensual y gestión de comunidad activa en Instagram y TikTok.",
-    result:
-      "El concepto proyecta un crecimiento sostenido de comunidad y un engagement por encima del promedio de la industria mediante contenido de valor y constancia editorial.",
-    highlights: [
-      { value: "+340%", label: "seguidores proyectados" },
-      { value: "8.2%", label: "engagement objetivo" },
-    ],
-    tags: ["Instagram", "TikTok", "Branding", "Content Strategy"],
-    images: [],
+    step: "01",
+    title: "Descubrir",
+    description:
+      "Escucho tu visión, tus ideas y objetivos para entender tu esencia.",
   },
   {
-    id: "estudio-yoga",
-    name: "Alma Studio",
-    category: "Community Management",
-    concept: true,
-    problem:
-      "Un estudio de yoga boutique quería digitalizar su comunicación y construir una comunidad online que reflejara la experiencia presencial.",
-    solution:
-      "Creación de contenido audiovisual editorial, stories interactivos diarios y campañas de paid media segmentadas por zona geográfica.",
-    result:
-      "El plan apunta a duplicar reservas online y sostener una comunidad activa con alta retención mensual a través de contenido cercano y experiencial.",
-    highlights: [
-      { value: "x2", label: "reservas online (objetivo)" },
-      { value: "92%", label: "retención proyectada" },
-    ],
-    tags: ["Community", "Paid Media", "Content Creation"],
-    images: [],
+    step: "02",
+    title: "Definir",
+    description:
+      "Investigo, analizo y diseño una estrategia con una base sólida.",
   },
   {
-    id: "restaurante-premium",
-    name: "Casa Piedra",
-    category: "Marketing Digital",
-    concept: true,
-    problem:
-      "Un restaurante de alta gama necesitaba renovar su presencia digital manteniendo la exclusividad de su marca.",
-    solution:
-      "Rediseño completo de la estrategia digital: fotografía gastronómica profesional, copywriting editorial y campaña de influencers locales.",
-    result:
-      "El concepto busca aumentar las reservas vía redes y ampliar el alcance orgánico manteniendo una estética premium coherente con la marca.",
-    highlights: [
-      { value: "+180%", label: "reservas vía redes (objetivo)" },
-      { value: "+65%", label: "alcance orgánico" },
-    ],
-    tags: ["Strategy", "Influencer Marketing", "Photography"],
-    images: [],
+    step: "03",
+    title: "Crear",
+    description:
+      "Desarrollo conceptos y materiales visuales con intención y claridad.",
+  },
+  {
+    step: "04",
+    title: "Entregar",
+    description:
+      "Entrego soluciones de alta identidad, listas para generar impacto real.",
   },
 ];
 
-export const EDUCATION = [
-  {
-    year: "2024",
-    title: "Marketing Digital Avanzado",
-    institution: "Google Digital Academy",
-    type: "certification",
-  },
-  {
-    year: "2024",
-    title: "Community Management Profesional",
-    institution: "Coderhouse",
-    type: "course",
-  },
-  {
-    year: "2023",
-    title: "Diseño Gráfico para Redes Sociales",
-    institution: "Domestika",
-    type: "course",
-  },
-  {
-    year: "2023",
-    title: "Copywriting & Storytelling Digital",
-    institution: "Platzi",
-    type: "course",
-  },
-  {
-    year: "2023",
-    title: "Meta Blueprint Certification",
-    institution: "Meta",
-    type: "certification",
-  },
-];
-
-export const TOOLS = [
-  "Figma",
-  "Canva Pro",
-  "Meta Business Suite",
-  "Google Analytics",
-  "Hootsuite",
-  "Mailchimp",
-  "Adobe Photoshop",
-  "CapCut",
+export const KEYWORDS = [
+  "Tatuajes",
+  "Ilustración",
+  "Pintura",
+  "Marketing & Branding",
 ];

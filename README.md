@@ -1,7 +1,8 @@
 # Tamara González — Portfolio
 
-Portfolio profesional de Tamara González (Marketing Digital & Community Management),
-diseñado por **Rabbit Studio**. Construido con React, Vite y Tailwind CSS.
+Perfil de **artista visual** de Tamara González — tatuajes, ilustración y pintura,
+más servicios de Marketing & Branding. Estética dark romantic (burgundy + dusty rose).
+Construido con React, Vite y Tailwind CSS.
 
 ## Setup
 
@@ -22,11 +23,12 @@ diseñado por **Rabbit Studio**. Construido con React, Vite y Tailwind CSS.
 
 Todo el contenido editable vive en `src/content.js`:
 
-- `SITE` — nombre, rol, email y redes.
+- `SITE` — nombre, rol, frase de esencia, WhatsApp, ubicación y redes.
 - `ABOUT` — bio.
-- `SPECIALTIES` — servicios/especialidades.
-- `PROJECTS` — proyectos muestra (problema → solución → resultado).
-- `EDUCATION` / `TOOLS` — formación y herramientas.
+- `CATEGORIES` — trabajos seleccionados (Tatuajes, Pinturas, Dibujos, Foto mía); poné el cover en `image`.
+- `SERVICES` — servicios (Marketing & Branding, Ilustración, Pintura, C.M.).
+- `PROCESS` — pasos del proceso.
+- `KEYWORDS` — palabras clave.
 
 ## Deploy
 

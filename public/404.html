@@ -3,60 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 — Kexxy Portfolio</title>
+    <title>404 — Tamara González</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body {
-        background: #050505;
-        color: #EAEAEA;
-        font-family: Arial Narrow, Arial, sans-serif;
+        background: #0D0709;
+        color: #ECE0DB;
+        font-family: Georgia, "Times New Roman", serif;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 2rem;
+        gap: 1.5rem;
         text-align: center;
         padding: 2rem;
       }
       .code {
-        font-size: clamp(5rem, 20vw, 12rem);
-        font-weight: 900;
+        font-size: clamp(5rem, 20vw, 11rem);
+        font-weight: 300;
         line-height: 1;
-        letter-spacing: -0.06em;
-        color: #111;
+        letter-spacing: 0.02em;
+        color: #ECE0DB;
       }
+      .code span { font-style: italic; color: #CFA3AB; }
       .label {
-        font-family: monospace;
-        font-size: 10px;
-        letter-spacing: 0.3em;
-        text-transform: uppercase;
-        color: rgba(255,255,255,0.3);
-      }
-      .dot { color: #8B0000; }
-      a {
-        font-family: monospace;
+        font-family: Arial, sans-serif;
         font-size: 10px;
         letter-spacing: 0.28em;
         text-transform: uppercase;
-        color: rgba(255,255,255,0.5);
+        color: rgba(147, 112, 123, 0.9);
+      }
+      a {
+        font-family: Arial, sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: rgba(236, 224, 219, 0.7);
         text-decoration: none;
-        border-bottom: 1px solid rgba(139,0,0,0.4);
-        padding-bottom: 2px;
+        border-bottom: 1px solid rgba(207, 163, 171, 0.4);
+        padding-bottom: 3px;
         transition: color 200ms;
       }
-      a:hover { color: #fff; }
+      a:hover { color: #CFA3AB; }
     </style>
-    <script>
-      // Redirect to the portfolio after 3 seconds
-      setTimeout(() => {
-        window.location.href = "/kexxy-portfolio/";
-      }, 3000);
-    </script>
   </head>
   <body>
-    <p class="code">4<span class="dot">0</span>4</p>
+    <p class="code">4<span>0</span>4</p>
     <p class="label">Página no encontrada</p>
-    <a href="/kexxy-portfolio/">← Volver al portfolio</a>
+    <a href="/">← Volver al inicio</a>
   </body>
 </html>

@@ -7,28 +7,12 @@ export const fadeUp = {
   },
 };
 
-export const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { duration: 1.0, ease: "easeOut" },
-  },
-};
-
 export const blurIn = {
   hidden: { opacity: 0, filter: "blur(12px)" },
   visible: {
     opacity: 1,
     filter: "blur(0px)",
     transition: { duration: 1.2, ease: [0.25, 0.1, 0.25, 1] },
-  },
-};
-
-export const maskReveal = {
-  hidden: { clipPath: "inset(0 0 100% 0)" },
-  visible: {
-    clipPath: "inset(0 0 0% 0)",
-    transition: { duration: 1.0, ease: [0.76, 0, 0.24, 1] },
   },
 };
 

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 
 const NAV_LINKS = [
+  { label: "Trabajos", href: "#trabajos" },
+  { label: "Servicios", href: "#servicios" },
+  { label: "Proceso", href: "#proceso" },
   { label: "Sobre mí", href: "#about" },
-  { label: "Especialidades", href: "#specialties" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Formación", href: "#education" },
   { label: "Contacto", href: "#contact" },
 ];
 
@@ -22,7 +22,9 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
   return (
@@ -32,37 +34,46 @@ export default function Navbar() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.3 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-          scrolled
-            ? "glass-strong border-b border-white/50"
-            : "bg-transparent"
+          scrolled ? "glass-strong border-b border-roseGold/10" : "bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
           <a
             href="#"
-            className="font-serif text-xl tracking-wide text-plum hover:text-mauve transition-colors duration-500"
+            className="font-serif text-lg tracking-editorial uppercase text-cream hover:text-dusty transition-colors duration-500"
           >
             Tamara González
           </a>
 
           {/* Desktop */}
-          <ul className="hidden md:flex items-center gap-10">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="text-xs font-sans uppercase tracking-editorial text-plumSoft hover:text-mauve transition-colors duration-500"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div className="hidden md:flex items-center gap-10">
+            <ul className="flex items-center gap-9">
+              {NAV_LINKS.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-[11px] font-sans uppercase tracking-editorial text-mauve hover:text-dusty transition-colors duration-500"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#trabajos"
+              className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-editorial text-cream/80 hover:text-dusty transition-colors duration-500"
+            >
+              Ver proyectos
+              <span className="grid place-items-center w-7 h-7 rounded-full border border-roseGold/40 group-hover:border-dusty/60 transition-colors">
+                <ArrowUpRight size={13} strokeWidth={1.25} />
+              </span>
+            </a>
+          </div>
 
           {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden text-plum hover:text-mauve transition-colors"
+            className="md:hidden text-cream hover:text-dusty transition-colors"
             aria-label="Menu"
           >
             {open ? <X size={22} /> : <Menu size={22} />}
@@ -84,9 +95,7 @@ export default function Navbar() {
               initial="hidden"
               animate="visible"
               exit="hidden"
-              variants={{
-                visible: { transition: { staggerChildren: 0.08 } },
-              }}
+              variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
               className="flex flex-col items-center gap-8"
             >
               {NAV_LINKS.map((link) => (
@@ -100,7 +109,7 @@ export default function Navbar() {
                   <a
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="font-serif text-3xl text-plum hover:text-mauve transition-colors duration-500"
+                    className="font-serif text-3xl text-cream hover:text-dusty transition-colors duration-500"
                   >
                     {link.label}
                   </a>
