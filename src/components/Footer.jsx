@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { fadeUp } from "../utils/animations";
 import { SITE } from "../content";
 import Monogram from "./Monogram";
+import RabbitStudioLogo from "./RabbitStudioLogo";
 
 const SOCIALS = [
   { label: "Instagram", href: SITE.instagram },
@@ -21,8 +22,9 @@ export default function Footer() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-          className="flex flex-col md:flex-row items-center justify-between gap-6"
+          className="flex flex-col md:flex-row items-center justify-between gap-8"
         >
+          {/* Identity */}
           <motion.div variants={fadeUp} className="flex items-center gap-4 text-center md:text-left">
             <Monogram size={44} />
             <p className="text-[11px] text-mauve/80 tracking-wide leading-relaxed">
@@ -30,6 +32,7 @@ export default function Footer() {
             </p>
           </motion.div>
 
+          {/* Socials */}
           <motion.div variants={fadeUp} className="flex items-center gap-7">
             {SOCIALS.map((s) => (
               <a
@@ -44,15 +47,24 @@ export default function Footer() {
             ))}
           </motion.div>
 
-          <motion.a
+          {/* Rabbit Studio */}
+          <motion.div
             variants={fadeUp}
-            href={`https://${SITE.domain}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[10px] uppercase tracking-editorial text-cream/70 hover:text-dusty transition-colors duration-500"
+            className="group flex items-center gap-3 text-mauve"
           >
-            {SITE.domain}
-          </motion.a>
+            <RabbitStudioLogo
+              size={34}
+              className="text-dusty group-hover:text-rose transition-colors duration-500"
+            />
+            <div className="text-center md:text-left leading-tight">
+              <p className="font-serif text-base italic tracking-wide text-cream group-hover:text-dusty transition-colors duration-500">
+                Rabbit Studio
+              </p>
+              <p className="text-[9px] uppercase tracking-editorial text-mauve/70">
+                Estudio creativo
+              </p>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </footer>
