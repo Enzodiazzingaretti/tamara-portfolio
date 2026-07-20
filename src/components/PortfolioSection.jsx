@@ -67,10 +67,11 @@ export default function PortfolioSection() {
             href={SITE.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-editorial text-mauve hover:text-dusty transition-colors duration-500 whitespace-nowrap"
+            className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-editorial text-mauve hover:text-dusty transition-colors duration-500 whitespace-nowrap shrink-0"
           >
-            Ver todos los proyectos
-            <span className="grid place-items-center w-7 h-7 rounded-full border border-roseGold/40 group-hover:border-dusty/60 transition-colors">
+            <span className="hidden sm:inline">Ver todos los proyectos</span>
+            <span className="sm:hidden">Ver todos</span>
+            <span className="grid place-items-center w-7 h-7 shrink-0 rounded-full border border-roseGold/40 group-hover:border-dusty/60 transition-colors">
               <ArrowUpRight size={13} strokeWidth={1.25} />
             </span>
           </motion.a>

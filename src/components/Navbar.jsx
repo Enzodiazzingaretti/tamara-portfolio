@@ -27,6 +27,13 @@ export default function Navbar() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <>
       <motion.nav
@@ -40,19 +47,19 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
           <a
             href="#"
-            className="font-serif text-lg tracking-editorial uppercase text-cream hover:text-dusty transition-colors duration-500"
+            className="font-serif text-lg tracking-editorial uppercase text-cream hover:text-dusty transition-colors duration-500 whitespace-nowrap"
           >
             Tamara González
           </a>
 
-          {/* Desktop */}
-          <div className="hidden md:flex items-center gap-10">
-            <ul className="flex items-center gap-9">
+          {/* Desktop (lg+: en tablet los links no entran sin quebrarse) */}
+          <div className="hidden lg:flex items-center gap-8">
+            <ul className="flex items-center gap-7">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-[11px] font-sans uppercase tracking-editorial text-mauve hover:text-dusty transition-colors duration-500"
+                    className="text-[11px] font-sans uppercase tracking-editorial text-mauve hover:text-dusty transition-colors duration-500 whitespace-nowrap"
                   >
                     {link.label}
                   </a>
@@ -61,20 +68,21 @@ export default function Navbar() {
             </ul>
             <a
               href="#trabajos"
-              className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-editorial text-cream/80 hover:text-dusty transition-colors duration-500"
+              className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-editorial text-cream/80 hover:text-dusty transition-colors duration-500 whitespace-nowrap"
             >
               Ver proyectos
-              <span className="grid place-items-center w-7 h-7 rounded-full border border-roseGold/40 group-hover:border-dusty/60 transition-colors">
+              <span className="grid place-items-center w-7 h-7 shrink-0 rounded-full border border-roseGold/40 group-hover:border-dusty/60 transition-colors">
                 <ArrowUpRight size={13} strokeWidth={1.25} />
               </span>
             </a>
           </div>
 
-          {/* Mobile toggle */}
+          {/* Mobile / tablet toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden text-cream hover:text-dusty transition-colors"
-            aria-label="Menu"
+            className="lg:hidden p-2 -mr-2 text-cream hover:text-dusty transition-colors"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={open}
           >
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>

@@ -1,3 +1,4 @@
+import { MotionConfig } from "framer-motion";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import PortfolioSection from "./components/PortfolioSection";
@@ -9,7 +10,8 @@ import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="relative min-h-screen text-cream overflow-x-hidden">
+    <MotionConfig reducedMotion="user">
+      <div className="relative min-h-screen text-cream overflow-x-hidden">
       {/* Fixed moody atmosphere background */}
       <div className="bg-atmosphere" aria-hidden="true" />
 
@@ -24,7 +26,8 @@ export default function App() {
         <ContactSection />
       </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </MotionConfig>
   );
 }

@@ -13,7 +13,7 @@ export default {
         rose: "#DDAEB6", // light rose
         roseGold: "#C39A8D", // muted rose-gold (lines/icons)
         cream: "#ECE0DB", // primary text
-        mauve: "#93707B", // secondary text
+        mauve: "#A98693", // secondary text (AA sobre noir y tarjetas)
       },
       fontFamily: {
         serif: ['"Cormorant Garamond"', "Georgia", "serif"],

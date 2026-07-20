@@ -27,20 +27,20 @@ export default function Footer() {
           {/* Identity */}
           <motion.div variants={fadeUp} className="flex items-center gap-4 text-center md:text-left">
             <Monogram size={44} />
-            <p className="text-[11px] text-mauve/80 tracking-wide leading-relaxed">
+            <p className="text-[11px] text-mauve tracking-wide leading-relaxed">
               © {year} {SITE.name}.<br className="hidden sm:block" /> Todos los derechos reservados.
             </p>
           </motion.div>
 
           {/* Socials */}
-          <motion.div variants={fadeUp} className="flex items-center gap-7">
+          <motion.div variants={fadeUp} className="flex items-center gap-4">
             {SOCIALS.map((s) => (
               <a
                 key={s.label}
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[10px] uppercase tracking-editorial text-mauve hover:text-dusty transition-colors duration-500"
+                className="text-[11px] uppercase tracking-editorial text-mauve hover:text-dusty transition-colors duration-500 px-2 py-3"
               >
                 {s.label}
               </a>
@@ -60,7 +60,7 @@ export default function Footer() {
               <p className="font-serif text-base italic tracking-wide text-cream group-hover:text-dusty transition-colors duration-500">
                 Rabbit Studio
               </p>
-              <p className="text-[9px] uppercase tracking-editorial text-mauve/70">
+              <p className="text-[10px] uppercase tracking-editorial text-mauve/90">
                 Estudio creativo
               </p>
             </div>

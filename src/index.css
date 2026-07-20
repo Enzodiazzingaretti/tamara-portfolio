@@ -14,7 +14,7 @@
   --rose: #DDAEB6;
   --rose-gold: #C39A8D;
   --cream: #ECE0DB;
-  --mauve: #93707B;
+  --mauve: #A98693; /* subido de #93707B para pasar WCAG AA sobre tarjetas */
 }
 
 * {
@@ -27,6 +27,23 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Anchor targets: keep section titles clear of the fixed 80px navbar */
+section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* Themed keyboard focus (replaces the default blue outline) */
+:focus-visible {
+  outline: 2px solid rgba(207, 163, 171, 0.75);
+  outline-offset: 3px;
 }
 
 body {
