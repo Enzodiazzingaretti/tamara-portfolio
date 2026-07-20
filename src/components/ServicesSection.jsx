@@ -29,7 +29,7 @@ function ServiceCard({ service, index }) {
 
 export default function ServicesSection() {
   return (
-    <section id="servicios" className="section-padding relative">
+    <section id="servicios" className="section-padding section-band relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <motion.div

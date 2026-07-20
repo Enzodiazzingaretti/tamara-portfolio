@@ -10,7 +10,7 @@ function WorkCard({ item, index }) {
       target="_blank"
       rel="noopener noreferrer"
       variants={scaleIn}
-      className="group relative block rounded-2xl overflow-hidden glass"
+      className="group relative block rounded-2xl overflow-hidden glass hover:[border-color:rgba(207,163,171,0.3)] hover:shadow-glass-lg transition-all duration-500"
     >
       <div className="relative aspect-[3/4] art-placeholder overflow-hidden">
         {item.image && (

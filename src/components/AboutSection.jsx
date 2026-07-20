@@ -5,7 +5,7 @@ import Monogram from "./Monogram";
 
 export default function AboutSection() {
   return (
-    <section id="about" className="section-padding relative">
+    <section id="about" className="section-padding section-band relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <motion.h2
           initial="hidden"

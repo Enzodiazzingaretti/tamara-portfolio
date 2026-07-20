@@ -46,7 +46,7 @@ export default function ContactSection() {
               <div className="relative w-full max-w-sm aspect-[16/10] rounded-2xl art-placeholder overflow-hidden flex items-center justify-center">
                 <Sparkle size={40} strokeWidth={0.6} className="absolute left-10 text-dusty/40" />
                 <p className="font-serif italic text-2xl text-cream/70">
-                  Ideas become form.
+                  Las ideas toman forma.
                 </p>
               </div>
             </div>

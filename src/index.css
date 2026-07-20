@@ -107,6 +107,29 @@ h1, h2, h3, h4 {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
+/* subtle film grain over the whole page — adds texture to the flat dark bg */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+}
+
+/* alternating "chapter" band — gives scroll rhythm like the reference mockup */
+.section-band {
+  background: linear-gradient(
+    180deg,
+    rgba(28, 14, 20, 0) 0%,
+    rgba(28, 14, 20, 0.5) 8%,
+    rgba(28, 14, 20, 0.5) 92%,
+    rgba(28, 14, 20, 0) 100%
+  );
+  border-top: 1px solid rgba(207, 163, 171, 0.06);
+  border-bottom: 1px solid rgba(207, 163, 171, 0.06);
+}
+
 /* dark image placeholder for galleries */
 .art-placeholder {
   background:

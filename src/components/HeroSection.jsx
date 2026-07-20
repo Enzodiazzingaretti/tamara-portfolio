@@ -1,7 +1,15 @@
 import { motion } from "framer-motion";
-import { Sparkle } from "lucide-react";
-import { SITE, KEYWORDS } from "../content";
+import { Sparkle, MessageCircle, ArrowRight } from "lucide-react";
+import { SITE } from "../content";
 import { fadeUp, blurIn, slideFromRight } from "../utils/animations";
+
+// Chips del hero: navegan a la sección correspondiente
+const HERO_LINKS = [
+  { label: "Tatuajes", href: "#trabajos" },
+  { label: "Ilustración", href: "#trabajos" },
+  { label: "Pintura", href: "#trabajos" },
+  { label: "Marketing & Branding", href: "#servicios" },
+];
 
 export default function HeroSection() {
   return (
@@ -51,15 +59,40 @@ export default function HeroSection() {
               </p>
             </motion.div>
 
-            {/* Category chips */}
+            {/* CTAs */}
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-4 mb-10">
+              <a
+                href="#trabajos"
+                className="group inline-flex items-center gap-3 px-8 py-4 rounded-full glass text-cream text-xs uppercase tracking-editorial hover:text-dusty hover:shadow-glass-lg transition-all duration-500"
+              >
+                Ver trabajos
+                <ArrowRight
+                  size={14}
+                  strokeWidth={1.25}
+                  className="group-hover:translate-x-1 transition-transform duration-300"
+                />
+              </a>
+              <a
+                href={SITE.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-7 py-4 rounded-full border border-roseGold/30 text-mauve text-xs uppercase tracking-editorial hover:border-dusty/60 hover:text-dusty transition-all duration-500"
+              >
+                <MessageCircle size={14} strokeWidth={1.25} />
+                Hablemos
+              </a>
+            </motion.div>
+
+            {/* Category links */}
             <motion.div variants={fadeUp} className="flex flex-wrap gap-2.5">
-              {KEYWORDS.map((k) => (
-                <span
-                  key={k}
-                  className="text-[10px] uppercase tracking-wide px-3.5 py-1.5 rounded-full glass-soft text-cream/70"
+              {HERO_LINKS.map((k) => (
+                <a
+                  key={k.label}
+                  href={k.href}
+                  className="text-[10px] uppercase tracking-wide px-3.5 py-1.5 rounded-full glass-soft text-cream/70 hover:text-dusty hover:[border-color:rgba(207,163,171,0.35)] transition-all duration-500"
                 >
-                  {k}
-                </span>
+                  {k.label}
+                </a>
               ))}
             </motion.div>
           </motion.div>

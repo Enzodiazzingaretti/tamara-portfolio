@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, MessageCircle } from "lucide-react";
+import { SITE } from "../content";
 
 const NAV_LINKS = [
   { label: "Trabajos", href: "#trabajos" },
@@ -123,6 +124,26 @@ export default function Navbar() {
                   </a>
                 </motion.li>
               ))}
+
+              {/* CTA WhatsApp */}
+              <motion.li
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                className="mt-4"
+              >
+                <a
+                  href={SITE.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setOpen(false)}
+                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-roseGold/40 text-dusty text-xs uppercase tracking-editorial hover:border-dusty/70 transition-all duration-500"
+                >
+                  <MessageCircle size={15} strokeWidth={1.25} />
+                  Hablemos
+                </a>
+              </motion.li>
             </motion.ul>
           </motion.div>
         )}

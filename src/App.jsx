@@ -7,26 +7,32 @@ import ProcessSection from "./components/ProcessSection";
 import AboutSection from "./components/AboutSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
+import WhatsAppFloat from "./components/WhatsAppFloat";
 
 export default function App() {
   return (
     <MotionConfig reducedMotion="user">
       <div className="relative min-h-screen text-cream overflow-x-hidden">
-      {/* Fixed moody atmosphere background */}
-      <div className="bg-atmosphere" aria-hidden="true" />
+        {/* Fixed moody atmosphere background */}
+        <div className="bg-atmosphere" aria-hidden="true" />
 
-      <Navbar />
+        {/* Film grain texture */}
+        <div className="grain" aria-hidden="true" />
 
-      <main className="relative z-10">
-        <HeroSection />
-        <PortfolioSection />
-        <ServicesSection />
-        <ProcessSection />
-        <AboutSection />
-        <ContactSection />
-      </main>
+        <Navbar />
+
+        <main className="relative z-10">
+          <HeroSection />
+          <PortfolioSection />
+          <ServicesSection />
+          <ProcessSection />
+          <AboutSection />
+          <ContactSection />
+        </main>
 
         <Footer />
+
+        <WhatsAppFloat />
       </div>
     </MotionConfig>
   );
