@@ -32,7 +32,8 @@ Todo el contenido editable vive en `src/content.js`:
 
 ## Deploy
 
-Configurado para Netlify (`netlify.toml`): build `npm run build`, publica `dist/`.
+Vercel. Detecta Vite automáticamente: build `npm run build`, output `dist/`. Cada
+push a `main` deploya solo.
 
 ## Scripts
 
