@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterAll } from "vitest";
 
 // api/ is CommonJS (see api/package.json), and nested `require()` calls
 // inside CJS modules are not intercepted by vi.mock() in this vitest setup.
@@ -8,12 +8,24 @@ import { describe, it, expect } from "vitest";
 // long as this happens before login.js does its own require('./_lib.js')
 // destructure below. Same pattern as api/content.test.js.
 const lib = require("./_lib.js");
+const originals = {
+  isConfigured: lib.isConfigured,
+  checkPassword: lib.checkPassword,
+  sign: lib.sign,
+  sessionCookie: lib.sessionCookie,
+};
 lib.isConfigured = () => true;
 lib.checkPassword = () => true;
 lib.sign = () => "tok";
 lib.sessionCookie = () => "cookie";
 
 const handler = require("./login.js");
+
+// Restore the shared _lib.js exports so the monkeypatch can't leak into other
+// test files if vitest isolation is ever disabled (defense-in-depth).
+afterAll(() => {
+  Object.assign(lib, originals);
+});
 
 function mockRes() {
   return {
