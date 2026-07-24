@@ -1,4 +1,7 @@
 const { isConfigured, checkPassword, sign, sessionCookie, SESSION_MS } = require('./_lib');
+const { makeLimiter } = require('./_rate');
+
+const allow = makeLimiter(5, 10 * 60 * 1000);
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -7,6 +10,9 @@ module.exports = async (req, res) => {
 
   if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });
   if (!isConfigured()) return res.status(501).json({ error: 'not_configured' });
+
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
+  if (!allow(ip)) return res.status(429).json({ error: 'rate_limited' });
 
   const password = req.body && req.body.password;
 
