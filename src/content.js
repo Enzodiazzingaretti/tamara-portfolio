@@ -61,3 +61,14 @@ export function mergeContent(defaults, incoming) {
   }
   return out;
 }
+
+export async function loadContent(fetchImpl = fetch) {
+  try {
+    const res = await fetchImpl("/content.json", { cache: "no-store" });
+    if (!res || !res.ok) return DEFAULTS;
+    const json = await res.json();
+    return mergeContent(DEFAULTS, json);
+  } catch {
+    return DEFAULTS;
+  }
+}
