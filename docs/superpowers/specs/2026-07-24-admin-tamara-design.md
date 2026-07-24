@@ -17,17 +17,27 @@ categorías) incluyendo **galerías de varias fotos por categoría**.
 ## Enfoque elegido
 
 **Runtime `content.json` + GitHub como backend** (patrón del press kit portado a
-React). Descartados: rebuild-en-cada-guardado (peor UX, ~40s por edición) y
-DB/CMS headless (sobredimensionado, agrega costo y dependencias).
+React, **igual a como funciona hoy el press kit**). Descartado: DB/CMS headless
+(sobredimensionado, agrega costo y dependencias).
 
 - `src/content.js` deja de ser la fuente de verdad y pasa a ser **defaults
   embebidos** + un loader.
-- La app hace `fetch('/content.json')` al cargar y mergea sobre los defaults.
-  Si el fetch falla, usa los defaults (el sitio nunca queda en blanco).
+- La app hace `fetch('/content.json', {cache:'no-store'})` al cargar y mergea
+  sobre los defaults. Si el fetch falla, usa los defaults (el sitio nunca queda
+  en blanco).
 - El panel lee/escribe `content.json` y sube imágenes vía funciones serverless
   de Vercel que escriben en el propio repo por la GitHub Contents API.
-- **Los cambios se ven al instante** en la próxima carga (no hace falta esperar
-  el rebuild que igual dispara el push a GitHub).
+
+**Publicación de los cambios (importante, sin sobrevender):** `content.json` y
+las imágenes se sirven como archivos estáticos desde `public/`. Guardar en el
+panel commitea al repo, y **Vercel redeploya solo** al recibir el commit; el
+cambio queda publicado en **~30-60s**, sin intervención manual. Es exactamente
+el comportamiento del press kit (que también fetchea un `content.json`
+estático). No es instantáneo, pero es automático. El `fetch` con `no-store`
+garantiza que, una vez redeployado, el navegador tome la versión nueva sin
+quedar pegado a cache. Un endpoint de lectura en vivo (para instantaneidad real)
+se descartó: agrega una invocación serverless por visita y se aleja del patrón
+del press kit; con el repo privado, `raw.githubusercontent` tampoco es opción.
 
 ## Componentes
 
@@ -190,7 +200,8 @@ Se entrega un paso a paso.
 
 - Tamara edita cualquier texto, imagen o item, prende/apaga secciones y arma
   galerías, todo desde `/admin`, sin tocar código.
-- Los cambios se ven en el sitio público en la próxima carga.
+- Al guardar, el cambio se publica solo (Vercel redeploya con el commit) y queda
+  visible en el sitio público en ~30-60s.
 - El sitio público se ve y se comporta **idéntico** al actual cuando el
   `content.json` iguala los defaults (ninguna regresión visual).
 - Sin el `content.json` (o con la API caída), el sitio sigue mostrando los
