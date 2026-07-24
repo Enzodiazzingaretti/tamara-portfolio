@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight, MessageCircle } from "lucide-react";
-import { SITE } from "../content";
+import { useContent } from "../ContentContext";
 
 const NAV_LINKS = [
   { label: "Trabajos", href: "#trabajos" },
@@ -12,6 +12,7 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
+  const { site } = useContent();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -134,7 +135,7 @@ export default function Navbar() {
                 className="mt-4"
               >
                 <a
-                  href={SITE.whatsappUrl}
+                  href={site.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setOpen(false)}

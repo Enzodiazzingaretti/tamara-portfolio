@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import { MessageCircle, ArrowRight, MapPin, Sparkle } from "lucide-react";
-import { SITE, KEYWORDS } from "../content";
+import { useContent } from "../ContentContext";
 import { fadeUp, stagger } from "../utils/animations";
 
 export default function ContactSection() {
+  const { site, keywords } = useContent();
   return (
     <section id="contact" className="section-padding relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -26,7 +27,7 @@ export default function ContactSection() {
                 Creemos algo con intención y propósito.
               </p>
               <a
-                href={SITE.whatsappUrl}
+                href={site.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 px-8 py-4 rounded-full glass-strong text-cream text-xs uppercase tracking-editorial hover:text-dusty transition-all duration-500"
@@ -67,7 +68,7 @@ export default function ContactSection() {
               Palabras clave
             </p>
             <ul className="space-y-2.5">
-              {KEYWORDS.map((k) => (
+              {keywords.map((k) => (
                 <li key={k} className="flex items-center gap-3 text-sm text-cream/85">
                   <span className="w-1 h-1 rounded-full bg-dusty" />
                   {k}
@@ -82,7 +83,7 @@ export default function ContactSection() {
               Contacto
             </p>
             <a
-              href={SITE.whatsappUrl}
+              href={site.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-start gap-3 mb-4"
@@ -94,12 +95,12 @@ export default function ContactSection() {
                 <span className="block text-sm text-cream/85 group-hover:text-dusty transition-colors">
                   Contacto a WhatsApp
                 </span>
-                <span className="block text-sm text-mauve">{SITE.whatsapp}</span>
+                <span className="block text-sm text-mauve">{site.whatsapp}</span>
               </span>
             </a>
             <p className="flex items-center gap-3 text-sm text-mauve">
               <MapPin size={14} strokeWidth={1.25} className="text-roseGold" />
-              {SITE.location}
+              {site.location}
             </p>
           </motion.div>
 
@@ -110,7 +111,7 @@ export default function ContactSection() {
             </p>
             <div className="flex flex-col gap-3 text-sm">
               <a
-                href={SITE.instagram}
+                href={site.socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-cream/85 hover:text-dusty transition-colors uppercase tracking-wide"
@@ -118,7 +119,7 @@ export default function ContactSection() {
                 Instagram
               </a>
               <a
-                href={SITE.behance}
+                href={site.socials.behance}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-cream/85 hover:text-dusty transition-colors uppercase tracking-wide"
@@ -126,7 +127,7 @@ export default function ContactSection() {
                 Behance
               </a>
               <a
-                href={SITE.pinterest}
+                href={site.socials.pinterest}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-cream/85 hover:text-dusty transition-colors uppercase tracking-wide"

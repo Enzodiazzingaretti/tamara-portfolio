@@ -1,16 +1,16 @@
 import { motion } from "framer-motion";
 import { fadeUp } from "../utils/animations";
-import { SITE } from "../content";
+import { useContent } from "../ContentContext";
 import Monogram from "./Monogram";
 import RabbitStudioLogo from "./RabbitStudioLogo";
 
-const SOCIALS = [
-  { label: "Instagram", href: SITE.instagram },
-  { label: "Behance", href: SITE.behance },
-  { label: "Pinterest", href: SITE.pinterest },
-];
-
 export default function Footer() {
+  const { site } = useContent();
+  const links = [
+    { label: "Instagram", href: site.socials.instagram },
+    { label: "Behance", href: site.socials.behance },
+    { label: "Pinterest", href: site.socials.pinterest },
+  ];
   const year = new Date().getFullYear();
 
   return (
@@ -28,13 +28,13 @@ export default function Footer() {
           <motion.div variants={fadeUp} className="flex items-center gap-4 text-center md:text-left">
             <Monogram size={44} />
             <p className="text-[11px] text-mauve tracking-wide leading-relaxed">
-              © {year} {SITE.name}.<br className="hidden sm:block" /> Todos los derechos reservados.
+              © {year} {site.name}.<br className="hidden sm:block" /> Todos los derechos reservados.
             </p>
           </motion.div>
 
           {/* Socials */}
           <motion.div variants={fadeUp} className="flex items-center gap-4">
-            {SOCIALS.map((s) => (
+            {links.map((s) => (
               <a
                 key={s.label}
                 href={s.href}

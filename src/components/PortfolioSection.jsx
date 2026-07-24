@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { CATEGORIES, SITE } from "../content";
+import { useContent } from "../ContentContext";
 import { fadeUp, scaleIn } from "../utils/animations";
 
-function WorkCard({ item, index }) {
+function WorkCard({ item, index, instagram }) {
   return (
     <motion.a
-      href={SITE.instagram}
+      href={instagram}
       target="_blank"
       rel="noopener noreferrer"
       variants={scaleIn}
@@ -45,6 +45,7 @@ function WorkCard({ item, index }) {
 }
 
 export default function PortfolioSection() {
+  const { categories, site } = useContent();
   return (
     <section id="trabajos" className="section-padding relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -64,7 +65,7 @@ export default function PortfolioSection() {
           </motion.h2>
           <motion.a
             variants={fadeUp}
-            href={SITE.instagram}
+            href={site.socials.instagram}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-editorial text-mauve hover:text-dusty transition-colors duration-500 whitespace-nowrap shrink-0"
@@ -86,8 +87,8 @@ export default function PortfolioSection() {
           variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
           className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5"
         >
-          {CATEGORIES.map((item, i) => (
-            <WorkCard key={item.id} item={item} index={i} />
+          {categories.filter((c) => c.enabled).map((item, i) => (
+            <WorkCard key={item.id} item={item} index={i} instagram={site.socials.instagram} />
           ))}
         </motion.div>
       </div>

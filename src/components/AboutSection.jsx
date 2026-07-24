@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
-import { ABOUT, SITE } from "../content";
+import { useContent } from "../ContentContext";
 import { fadeUp, slideFromLeft, slideFromRight } from "../utils/animations";
 import Monogram from "./Monogram";
 
 export default function AboutSection() {
+  const { about, site } = useContent();
   return (
     <section id="about" className="section-padding section-band relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -30,7 +31,7 @@ export default function AboutSection() {
                 &ldquo;
               </span>
               <p className="font-serif text-display-md font-light text-cream leading-snug">
-                {SITE.essence}
+                {site.essence}
               </p>
             </div>
           </motion.div>
@@ -46,10 +47,10 @@ export default function AboutSection() {
               <Monogram size={60} />
               <div>
                 <p className="text-sm uppercase tracking-editorial text-cream">
-                  {SITE.name}
+                  {site.name}
                 </p>
                 <p className="text-[11px] uppercase tracking-editorial text-mauve mt-1">
-                  {SITE.role}
+                  {site.role}
                 </p>
               </div>
             </motion.div>
@@ -57,10 +58,10 @@ export default function AboutSection() {
             <motion.div variants={fadeUp} className="rose-divider mb-8" />
 
             <motion.p variants={fadeUp} className="text-sm text-mauve leading-loose mb-5">
-              {ABOUT.intro}
+              {about.intro}
             </motion.p>
             <motion.p variants={fadeUp} className="text-sm text-mauve/90 leading-loose">
-              {ABOUT.body}
+              {about.body}
             </motion.p>
           </motion.div>
         </div>

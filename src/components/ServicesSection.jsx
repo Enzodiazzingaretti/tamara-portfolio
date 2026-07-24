@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Sparkle, Flower2, Hexagon, Sparkles } from "lucide-react";
-import { SERVICES } from "../content";
+import { useContent } from "../ContentContext";
 import { fadeUp } from "../utils/animations";
 
 const ICONS = { Sparkle, Flower2, Hexagon, Sparkles };
@@ -28,6 +28,7 @@ function ServiceCard({ service, index }) {
 }
 
 export default function ServicesSection() {
+  const { services } = useContent();
   return (
     <section id="servicios" className="section-padding section-band relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -62,7 +63,7 @@ export default function ServicesSection() {
           variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
           className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8"
         >
-          {SERVICES.map((service, i) => (
+          {services.filter((s) => s.enabled).map((service, i) => (
             <ServiceCard key={service.title} service={service} index={i} />
           ))}
         </motion.div>

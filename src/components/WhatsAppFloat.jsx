@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle } from "lucide-react";
-import { SITE } from "../content";
+import { useContent } from "../ContentContext";
 
 /* Botón flotante de WhatsApp: aparece después de scrollear el hero. */
 export default function WhatsAppFloat() {
+  const { site } = useContent();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function WhatsAppFloat() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 16, scale: 0.9 }}
           transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-          href={SITE.whatsappUrl}
+          href={site.whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Escribime por WhatsApp"

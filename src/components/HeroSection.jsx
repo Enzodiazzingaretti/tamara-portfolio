@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Sparkle, MessageCircle, ArrowRight } from "lucide-react";
-import { SITE } from "../content";
+import { useContent } from "../ContentContext";
 import { fadeUp, blurIn, slideFromRight } from "../utils/animations";
 
 // Chips del hero: navegan a la sección correspondiente
@@ -12,6 +12,7 @@ const HERO_LINKS = [
 ];
 
 export default function HeroSection() {
+  const { site } = useContent();
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
@@ -53,9 +54,9 @@ export default function HeroSection() {
 
             {/* Signature */}
             <motion.div variants={fadeUp} className="mb-10">
-              <p className="font-serif text-2xl italic text-cream">{SITE.name}</p>
+              <p className="font-serif text-2xl italic text-cream">{site.name}</p>
               <p className="text-[11px] uppercase tracking-editorial text-mauve mt-1">
-                {SITE.role}
+                {site.role}
               </p>
             </motion.div>
 
@@ -73,7 +74,7 @@ export default function HeroSection() {
                 />
               </a>
               <a
-                href={SITE.whatsappUrl}
+                href={site.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 px-7 py-4 rounded-full border border-roseGold/30 text-mauve text-xs uppercase tracking-editorial hover:border-dusty/60 hover:text-dusty transition-all duration-500"

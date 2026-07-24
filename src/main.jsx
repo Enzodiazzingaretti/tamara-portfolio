@@ -1,10 +1,13 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import { ContentProvider } from "./ContentContext";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <ContentProvider>
+      <App />
+    </ContentProvider>
   </StrictMode>,
 );

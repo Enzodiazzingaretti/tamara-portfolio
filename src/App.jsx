@@ -8,8 +8,10 @@ import AboutSection from "./components/AboutSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 import WhatsAppFloat from "./components/WhatsAppFloat";
+import { useContent } from "./ContentContext";
 
 export default function App() {
+  const { sections } = useContent();
   return (
     <MotionConfig reducedMotion="user">
       <div className="relative min-h-screen text-cream overflow-x-hidden">
@@ -23,11 +25,11 @@ export default function App() {
 
         <main className="relative z-10">
           <HeroSection />
-          <PortfolioSection />
-          <ServicesSection />
-          <ProcessSection />
-          <AboutSection />
-          <ContactSection />
+          {sections.portfolio && <PortfolioSection />}
+          {sections.services && <ServicesSection />}
+          {sections.process && <ProcessSection />}
+          {sections.about && <AboutSection />}
+          {sections.contact && <ContactSection />}
         </main>
 
         <Footer />

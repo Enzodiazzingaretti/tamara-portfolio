@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
-import { PROCESS } from "../content";
+import { useContent } from "../ContentContext";
 import { fadeUp } from "../utils/animations";
 
 export default function ProcessSection() {
+  const { process } = useContent();
+  const steps = process.filter((p) => p.enabled);
   return (
     <section id="proceso" className="section-padding relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -35,7 +37,7 @@ export default function ProcessSection() {
           variants={{ visible: { transition: { staggerChildren: 0.14 } } }}
           className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-6"
         >
-          {PROCESS.map((item, i) => (
+          {steps.map((item, i) => (
             <motion.div key={item.step} variants={fadeUp} className="relative">
               <div className="flex items-baseline gap-4 mb-4">
                 <span className="font-serif text-5xl font-light text-dusty/80 leading-none">
@@ -49,7 +51,7 @@ export default function ProcessSection() {
                 {item.description}
               </p>
               {/* connector arrow (desktop) */}
-              {i < PROCESS.length - 1 && (
+              {i < steps.length - 1 && (
                 <span className="hidden lg:block absolute top-4 -right-3 text-dusty/40">
                   →
                 </span>
