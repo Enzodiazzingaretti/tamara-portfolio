@@ -1,5 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { getContent, putContent, logout } from "./api";
+import Section from "./Section";
+import SitePanel from "./panels/SitePanel";
+import AboutPanel from "./panels/AboutPanel";
+import KeywordsPanel from "./panels/KeywordsPanel";
 
 export default function Editor({ onLogout }) {
   const [draft, setDraft] = useState(null);
@@ -47,7 +51,9 @@ export default function Editor({ onLogout }) {
         </div>
       </header>
       <main className="max-w-3xl mx-auto p-6 space-y-4">
-        {/* Secciones del editor se agregan en tasks 14-18, todas reciben draft + update */}
+        <Section title="Datos generales" defaultOpen><SitePanel draft={draft} update={update} /></Section>
+        <Section title="Sobre mí"><AboutPanel draft={draft} update={update} /></Section>
+        <Section title="Palabras clave"><KeywordsPanel draft={draft} update={update} /></Section>
       </main>
     </div>
   );
