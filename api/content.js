@@ -1,6 +1,7 @@
 const { requireAuth, ghRead, ghWrite, isAllowedFile } = require('./_lib.js');
 
-const FILE = 'content.json';
+// Vite sirve /content.json desde public/, así que se lee y escribe ahí.
+const FILE = 'public/content.json';
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');

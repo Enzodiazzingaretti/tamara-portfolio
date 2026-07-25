@@ -5,8 +5,9 @@ const lib = require("./_lib.js");
 beforeAll(() => { process.env.SESSION_SECRET = "test-secret-para-hmac"; });
 
 describe("isAllowedFile", () => {
-  it("permite content.json y nada más", () => {
-    expect(lib.isAllowedFile("content.json")).toBe(true);
+  it("permite public/content.json y nada más", () => {
+    expect(lib.isAllowedFile("public/content.json")).toBe(true);
+    expect(lib.isAllowedFile("content.json")).toBe(false);
     expect(lib.isAllowedFile("dates.json")).toBe(false);
     expect(lib.isAllowedFile("../secreto")).toBe(false);
   });

@@ -11,8 +11,9 @@ const BRANCH = process.env.GITHUB_BRANCH || process.env.VERCEL_GIT_COMMIT_REF ||
 const COOKIE_NAME = 'tamara_session';
 const SESSION_MS = 12 * 60 * 60 * 1000;
 
-// Only these paths may be written through the API.
-const ALLOWED_FILES = ['content.json'];
+// Only these paths may be written through the API. El sitio sirve /content.json
+// desde public/, así que la fuente de verdad editable es public/content.json.
+const ALLOWED_FILES = ['public/content.json'];
 const IMAGE_DIR = 'img/';
 
 function isConfigured() {
