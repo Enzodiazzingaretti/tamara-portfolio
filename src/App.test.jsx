@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 import { ContentProvider } from "./ContentContext";
@@ -10,7 +11,7 @@ function renderWith(overrides) {
 
 describe("App secciones condicionales", () => {
   it("oculta Proceso si sections.process es false", () => {
-    global.fetch = async () => ({ ok: false }); // que no pise el initial
+    globalThis.fetch = async () => ({ ok: false }); // que no pise el initial
     renderWith({ sections: { ...DEFAULTS.sections, process: false } });
     expect(screen.queryByText("Mi proceso")).not.toBeInTheDocument();
   });
