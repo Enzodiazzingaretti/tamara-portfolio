@@ -38,7 +38,7 @@
 - `src/lib/compressImage.js` — canvas → webp bajo el límite.
 - `src/components/Lightbox.jsx` — visor de galería accesible.
 - `api/_lib.js`, `api/login.js`, `api/logout.js`, `api/session.js`, `api/content.js`, `api/upload.js` — backend.
-- `scripts/hash-password.js` — genera el hash de la contraseña.
+- `scripts/hash-password.cjs` — genera el hash de la contraseña.
 - `vercel.json` — rewrite de `/admin`.
 - `vitest.config.js`, `src/test/setup.js` — test infra.
 - `docs/DEPLOY-ADMIN.md` — paso a paso de env vars.
@@ -615,17 +615,17 @@ git commit -m "feat(api): _lib con auth, sesión y GitHub Contents API"
 ## Task 7: Script de hash + endpoints de sesión
 
 **Files:**
-- Create: `scripts/hash-password.js`, `api/login.js`, `api/logout.js`, `api/session.js`
+- Create: `scripts/hash-password.cjs`, `api/login.js`, `api/logout.js`, `api/session.js`
 
 **Interfaces:**
 - Consumes: `api/_lib.js`.
 - Produces:
-  - `node scripts/hash-password.js <password>` → imprime `scrypt$<salt>$<key>`.
+  - `node scripts/hash-password.cjs <password>` → imprime `scrypt$<salt>$<key>`.
   - `POST api/login` `{password}` → set-cookie sesión si OK; 401 si no.
   - `POST api/logout` → limpia cookie.
   - `GET api/session` → `{authenticated: boolean}`.
 
-- [ ] **Step 1: Portar `scripts/hash-password.js`** (de `presskit_digital/scripts/hash-password.js`, sin cambios).
+- [ ] **Step 1: Portar `scripts/hash-password.cjs`** (de `presskit_digital/scripts/hash-password.cjs`, sin cambios).
 
 - [ ] **Step 2: Crear `api/login.js`**
 
@@ -635,13 +635,13 @@ Portar de `presskit_digital/api/login.js`. Verifica `checkPassword`, arma sesió
 
 - [ ] **Step 4: Verificar el hash localmente**
 
-Run: `node scripts/hash-password.js prueba123`
+Run: `node scripts/hash-password.cjs prueba123`
 Expected: imprime una línea `scrypt$...$...`.
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add scripts/hash-password.js api/login.js api/logout.js api/session.js
+git add scripts/hash-password.cjs api/login.js api/logout.js api/session.js
 git commit -m "feat(api): login/logout/session + hash-password"
 ```
 
@@ -871,7 +871,7 @@ Nota: no agregar rewrite catch-all `/(.*)` que tape `/api` o `/trabajos`. Solo `
 
 - [ ] **Step 2: Crear `docs/DEPLOY-ADMIN.md`** con el paso a paso:
   1. Crear GitHub token fine-grained: repo `tamara-portfolio`, permiso Contents: Read and write.
-  2. `node scripts/hash-password.js <contraseña>` → copiar el hash.
+  2. `node scripts/hash-password.cjs <contraseña>` → copiar el hash.
   3. En Vercel → Project → Settings → Environment Variables, agregar: `ADMIN_PASSWORD_HASH`, `GITHUB_TOKEN`, `SESSION_SECRET` (string aleatorio largo). Opcional `GITHUB_OWNER`/`GITHUB_REPO`/`GITHUB_BRANCH` (default `main`) si no se toman de `VERCEL_GIT_*`.
   4. Redeploy.
 

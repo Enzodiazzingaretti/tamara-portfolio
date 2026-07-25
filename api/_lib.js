@@ -26,7 +26,7 @@ function isConfigured() {
 
 /* ---------- password ---------- */
 
-// Stored as: scrypt$<saltBase64>$<keyBase64>  (see scripts/hash-password.js)
+// Stored as: scrypt$<saltBase64>$<keyBase64>  (see scripts/hash-password.cjs)
 function checkPassword(password) {
   const stored = process.env.ADMIN_PASSWORD_HASH || '';
   const parts = stored.split('$');

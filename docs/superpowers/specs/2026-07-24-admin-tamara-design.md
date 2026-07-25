@@ -176,7 +176,7 @@ Notas del modelo:
 
 1. Crear un **GitHub token** (fine-grained, con permiso de contenidos sobre el
    repo `tamara-portfolio`).
-2. Generar el hash de la contraseña con un script (`scripts/hash-password.js`,
+2. Generar el hash de la contraseña con un script (`scripts/hash-password.cjs`,
    portado).
 3. Cargar en Vercel las variables de entorno: `ADMIN_PASSWORD_HASH`,
    `GITHUB_TOKEN`, `SESSION_SECRET` (y opcionalmente `GITHUB_OWNER`/`GITHUB_REPO`
