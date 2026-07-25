@@ -36,7 +36,7 @@ export default function GalleryField({ slot, images, onChange }) {
       </div>
 
       {list.length > 0 && (
-        <div className="grid grid-cols-4 gap-2 mb-3">
+        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-3">
           {list.map((url, i) => (
             <div key={url} className="relative group aspect-square rounded-lg overflow-hidden border border-plum/60">
               <img src={url} alt="" className="w-full h-full object-cover" />
