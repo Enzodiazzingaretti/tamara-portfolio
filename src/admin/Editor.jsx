@@ -5,6 +5,8 @@ import SitePanel from "./panels/SitePanel";
 import AboutPanel from "./panels/AboutPanel";
 import KeywordsPanel from "./panels/KeywordsPanel";
 import SectionsPanel from "./panels/SectionsPanel";
+import ServicesPanel from "./panels/ServicesPanel";
+import ProcessPanel from "./panels/ProcessPanel";
 
 export default function Editor({ onLogout }) {
   const [draft, setDraft] = useState(null);
@@ -56,6 +58,8 @@ export default function Editor({ onLogout }) {
         <Section title="Sobre mí"><AboutPanel draft={draft} update={update} /></Section>
         <Section title="Palabras clave"><KeywordsPanel draft={draft} update={update} /></Section>
         <Section title="Secciones visibles"><SectionsPanel draft={draft} update={update} /></Section>
+        <Section title="Servicios"><ServicesPanel draft={draft} update={update} /></Section>
+        <Section title="Proceso"><ProcessPanel draft={draft} update={update} /></Section>
       </main>
     </div>
   );

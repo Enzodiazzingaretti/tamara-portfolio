@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Sparkle, Flower2, Hexagon, Sparkles } from "lucide-react";
+import { Sparkle, Flower2, Hexagon, Sparkles, Palette, PenTool, Brush, Heart } from "lucide-react";
 import { useContent } from "../ContentContext";
 import { fadeUp } from "../utils/animations";
 
-const ICONS = { Sparkle, Flower2, Hexagon, Sparkles };
+const ICONS = { Sparkle, Flower2, Hexagon, Sparkles, Palette, PenTool, Brush, Heart };
 
 function ServiceCard({ service, index }) {
   const Icon = ICONS[service.icon] || Sparkle;
