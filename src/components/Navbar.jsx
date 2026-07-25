@@ -4,15 +4,18 @@ import { Menu, X, ArrowUpRight, MessageCircle } from "lucide-react";
 import { useContent } from "../ContentContext";
 
 const NAV_LINKS = [
-  { label: "Trabajos", href: "#trabajos" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Proceso", href: "#proceso" },
-  { label: "Sobre mí", href: "#about" },
-  { label: "Contacto", href: "#contact" },
+  { label: "Trabajos", href: "#trabajos", section: "portfolio" },
+  { label: "Servicios", href: "#servicios", section: "services" },
+  { label: "Proceso", href: "#proceso", section: "process" },
+  { label: "Sobre mí", href: "#about", section: "about" },
+  { label: "Contacto", href: "#contact", section: "contact" },
 ];
 
 export default function Navbar() {
-  const { site } = useContent();
+  const { site, sections } = useContent();
+  // Ocultar del menú los links de secciones apagadas desde el panel.
+  const links = NAV_LINKS.filter((l) => !l.section || sections?.[l.section] !== false);
+  const showPortfolio = sections?.portfolio !== false;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -57,7 +60,7 @@ export default function Navbar() {
           {/* Desktop (lg+: en tablet los links no entran sin quebrarse) */}
           <div className="hidden lg:flex items-center gap-8">
             <ul className="flex items-center gap-7">
-              {NAV_LINKS.map((link) => (
+              {links.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
@@ -68,15 +71,17 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
-            <a
-              href="#trabajos"
-              className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-editorial text-cream/80 hover:text-dusty transition-colors duration-500 whitespace-nowrap"
-            >
-              Ver proyectos
-              <span className="grid place-items-center w-7 h-7 shrink-0 rounded-full border border-roseGold/40 group-hover:border-dusty/60 transition-colors">
-                <ArrowUpRight size={13} strokeWidth={1.25} />
-              </span>
-            </a>
+            {showPortfolio && (
+              <a
+                href="#trabajos"
+                className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-editorial text-cream/80 hover:text-dusty transition-colors duration-500 whitespace-nowrap"
+              >
+                Ver proyectos
+                <span className="grid place-items-center w-7 h-7 shrink-0 rounded-full border border-roseGold/40 group-hover:border-dusty/60 transition-colors">
+                  <ArrowUpRight size={13} strokeWidth={1.25} />
+                </span>
+              </a>
+            )}
           </div>
 
           {/* Mobile / tablet toggle */}
@@ -108,7 +113,7 @@ export default function Navbar() {
               variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
               className="flex flex-col items-center gap-8"
             >
-              {NAV_LINKS.map((link) => (
+              {links.map((link) => (
                 <motion.li
                   key={link.href}
                   variants={{
