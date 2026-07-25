@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ImagePlus, ArrowLeft, ArrowRight, X, Loader2 } from "lucide-react";
 import { compressImage } from "../lib/compressImage";
 import { uploadImage } from "./api";
 import { move, removeAt } from "./ReorderableList";
@@ -24,28 +25,57 @@ export default function GalleryField({ slot, images, onChange }) {
   }
   const list = images || [];
   return (
-    <div className="mt-2">
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-xs uppercase tracking-wide text-mauve">Galería ({list.length})</span>
-        {list.length >= SOFT_MAX && <span className="text-rose text-xs">Muchas fotos: conviene no pasar de {SOFT_MAX}.</span>}
+    <div className="mt-3">
+      <div className="flex items-center justify-between mb-2.5">
+        <span className="text-[11px] font-sans uppercase tracking-[0.18em] text-mauve">
+          Galería · <span className="text-cream/80 tabular-nums">{list.length}</span>
+        </span>
+        {list.length >= SOFT_MAX && (
+          <span className="text-rose/90 text-[11px]">Conviene no pasar de {SOFT_MAX}.</span>
+        )}
       </div>
-      <div className="grid grid-cols-4 gap-2">
-        {list.map((url, i) => (
-          <div key={url} className="relative group aspect-square rounded-md overflow-hidden border border-plum">
-            <img src={url} alt="" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 flex items-end justify-between p-1 bg-gradient-to-t from-noir/80 to-transparent opacity-0 group-hover:opacity-100 transition">
-              <button type="button" aria-label="Antes" onClick={() => onChange(move(list, i, i - 1))} className="text-cream text-xs">←</button>
-              <button type="button" aria-label="Quitar" onClick={() => onChange(removeAt(list, i))} className="text-rose text-xs">✕</button>
-              <button type="button" aria-label="Después" onClick={() => onChange(move(list, i, i + 1))} className="text-cream text-xs">→</button>
+
+      {list.length > 0 && (
+        <div className="grid grid-cols-4 gap-2 mb-3">
+          {list.map((url, i) => (
+            <div key={url} className="relative group aspect-square rounded-lg overflow-hidden border border-plum/60">
+              <img src={url} alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 flex items-center justify-between px-1 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-t from-noir/85 via-noir/20 to-noir/40">
+                <button
+                  type="button" aria-label="Mover antes"
+                  onClick={() => onChange(move(list, i, i - 1))}
+                  className="grid place-items-center w-6 h-6 rounded-md bg-noir/60 text-cream hover:text-dusty disabled:opacity-30"
+                  disabled={i === 0}
+                >
+                  <ArrowLeft size={13} />
+                </button>
+                <button
+                  type="button" aria-label="Quitar"
+                  onClick={() => onChange(removeAt(list, i))}
+                  className="grid place-items-center w-6 h-6 rounded-md bg-noir/60 text-cream hover:text-rose"
+                >
+                  <X size={13} />
+                </button>
+                <button
+                  type="button" aria-label="Mover después"
+                  onClick={() => onChange(move(list, i, i + 1))}
+                  className="grid place-items-center w-6 h-6 rounded-md bg-noir/60 text-cream hover:text-dusty disabled:opacity-30"
+                  disabled={i === list.length - 1}
+                >
+                  <ArrowRight size={13} />
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <label className="mt-2 inline-block rounded-lg border border-dusty/50 text-dusty px-3 py-2 text-sm cursor-pointer">
-        {busy ? "Subiendo…" : "+ Agregar fotos"}
+          ))}
+        </div>
+      )}
+
+      <label className="inline-flex items-center gap-2 rounded-xl border border-dusty/40 text-dusty px-4 py-2.5 text-sm cursor-pointer hover:border-dusty/70 hover:bg-dusty/5 transition-colors">
+        {busy ? <Loader2 size={15} className="animate-spin" /> : <ImagePlus size={15} strokeWidth={1.75} />}
+        {busy ? "Subiendo…" : "Agregar fotos"}
         <input type="file" accept="image/*" multiple className="hidden" onChange={onFiles} disabled={busy} />
       </label>
-      {error && <p className="text-rose text-sm mt-1">{error}</p>}
+      {error && <p className="text-rose text-sm mt-2">{error}</p>}
     </div>
   );
 }
