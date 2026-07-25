@@ -3,7 +3,7 @@ import { compressImage } from "../lib/compressImage";
 import { uploadImage } from "./api";
 import { move, removeAt } from "./ReorderableList";
 
-const SOFT_MAX = 15;
+const SOFT_MAX = 30;
 
 export default function GalleryField({ slot, images, onChange }) {
   const [busy, setBusy] = useState(false);

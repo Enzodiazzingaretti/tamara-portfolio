@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useContent } from "../ContentContext";
 import { fadeUp, scaleIn } from "../utils/animations";
-import Lightbox from "./Lightbox";
+import CategoryGallery from "./CategoryGallery";
 
 function CardInner({ item, index }) {
   const cover = item.cover || item.gallery?.[0] || "";
@@ -59,7 +59,7 @@ function WorkCard({ item, index, instagram, onOpen }) {
 
 export default function PortfolioSection() {
   const { categories, site } = useContent();
-  const [open, setOpen] = useState(null); // { cat, index } | null
+  const [openCat, setOpenCat] = useState(null); // categoría abierta | null
 
   return (
     <section id="trabajos" className="section-padding relative">
@@ -108,19 +108,14 @@ export default function PortfolioSection() {
               item={item}
               index={i}
               instagram={site.socials.instagram}
-              onOpen={() => setOpen({ cat: item, index: 0 })}
+              onOpen={() => setOpenCat(item)}
             />
           ))}
         </motion.div>
       </div>
 
-      {open && (
-        <Lightbox
-          images={open.cat.gallery}
-          index={open.index}
-          onClose={() => setOpen(null)}
-          onIndexChange={(i) => setOpen((o) => ({ ...o, index: i }))}
-        />
+      {openCat && (
+        <CategoryGallery category={openCat} onClose={() => setOpenCat(null)} />
       )}
     </section>
   );
