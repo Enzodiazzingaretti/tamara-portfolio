@@ -29,6 +29,14 @@ export default function Footer() {
             <Monogram size={44} />
             <p className="text-[11px] text-mauve tracking-wide leading-relaxed">
               © {year} {site.name}.<br className="hidden sm:block" /> Todos los derechos reservados.
+              {" "}
+              <a
+                href="/admin"
+                aria-label="Panel de administración"
+                className="text-mauve/40 hover:text-dusty transition-colors duration-500"
+              >
+                · Panel
+              </a>
             </p>
           </motion.div>
 
