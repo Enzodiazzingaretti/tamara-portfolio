@@ -7,6 +7,8 @@ import KeywordsPanel from "./panels/KeywordsPanel";
 import SectionsPanel from "./panels/SectionsPanel";
 import ServicesPanel from "./panels/ServicesPanel";
 import ProcessPanel from "./panels/ProcessPanel";
+import HeroPanel from "./panels/HeroPanel";
+import PortfolioPanel from "./panels/PortfolioPanel";
 
 export default function Editor({ onLogout }) {
   const [draft, setDraft] = useState(null);
@@ -55,6 +57,8 @@ export default function Editor({ onLogout }) {
       </header>
       <main className="max-w-3xl mx-auto p-6 space-y-4">
         <Section title="Datos generales" defaultOpen><SitePanel draft={draft} update={update} /></Section>
+        <Section title="Imágenes (hero y sobre mí)"><HeroPanel draft={draft} update={update} /></Section>
+        <Section title="Portfolio y galerías"><PortfolioPanel draft={draft} update={update} /></Section>
         <Section title="Sobre mí"><AboutPanel draft={draft} update={update} /></Section>
         <Section title="Palabras clave"><KeywordsPanel draft={draft} update={update} /></Section>
         <Section title="Secciones visibles"><SectionsPanel draft={draft} update={update} /></Section>
