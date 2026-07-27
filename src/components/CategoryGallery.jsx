@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Play } from "lucide-react";
 import Lightbox from "./Lightbox";
+import { isVideo } from "../utils/media";
 
 // Overlay que muestra TODAS las imágenes de una categoría en un grid masonry.
 // Al tocar una imagen abre el Lightbox a pantalla completa para navegarlas.
@@ -66,14 +67,31 @@ export default function CategoryGallery({ category, onClose }) {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: Math.min(i * 0.04, 0.4) }}
-                className="group mb-4 block w-full break-inside-avoid overflow-hidden rounded-lg border border-plum/60 hover:border-dusty/50 transition-colors"
+                className="group relative mb-4 block w-full break-inside-avoid overflow-hidden rounded-lg border border-plum/60 hover:border-dusty/50 transition-colors"
               >
-                <img
-                  src={url}
-                  alt={`${category.title} ${i + 1}`}
-                  loading="lazy"
-                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                />
+                {isVideo(url) ? (
+                  <>
+                    <video
+                      src={url}
+                      className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                    />
+                    <span className="absolute bottom-2 right-2 grid place-items-center w-7 h-7 rounded-full bg-noir/60 backdrop-blur text-cream pointer-events-none">
+                      <Play size={13} strokeWidth={1.5} className="translate-x-[1px]" />
+                    </span>
+                  </>
+                ) : (
+                  <img
+                    src={url}
+                    alt={`${category.title} ${i + 1}`}
+                    loading="lazy"
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                )}
               </motion.button>
             ))}
           </div>

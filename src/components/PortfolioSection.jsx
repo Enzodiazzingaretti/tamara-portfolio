@@ -3,19 +3,29 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useContent } from "../ContentContext";
 import { fadeUp, scaleIn } from "../utils/animations";
+import { isVideo } from "../utils/media";
 import CategoryGallery from "./CategoryGallery";
 
 function CardInner({ item, index }) {
   const cover = item.cover || item.gallery?.[0] || "";
+  const coverClass =
+    "absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105";
   return (
     <div className="relative aspect-[3/4] art-placeholder overflow-hidden">
       {cover && (
-        <img
-          src={cover}
-          alt={item.title}
-          loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
+        isVideo(cover) ? (
+          <video
+            src={cover}
+            className={coverClass}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
+        ) : (
+          <img src={cover} alt={item.title} loading="lazy" className={coverClass} />
+        )
       )}
       {/* index */}
       <span className="absolute top-4 left-4 font-serif text-lg text-cream/70 tabular-nums">

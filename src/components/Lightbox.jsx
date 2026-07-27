@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { isVideo } from "../utils/media";
 
 export default function Lightbox({ images, index, onClose, onIndexChange }) {
   const prev = () => onIndexChange((index - 1 + images.length) % images.length);
@@ -26,8 +27,14 @@ export default function Lightbox({ images, index, onClose, onIndexChange }) {
           <button aria-label="Siguiente" onClick={(e) => { e.stopPropagation(); next(); }} className="absolute right-4 text-cream text-3xl">›</button>
         </>
       )}
-      <img src={images[index]} alt="" onClick={(e) => e.stopPropagation()}
-        className="max-h-[85vh] max-w-[90vw] object-contain rounded-lg shadow-glass-lg" />
+      {isVideo(images[index]) ? (
+        <video src={images[index]} onClick={(e) => e.stopPropagation()}
+          autoPlay muted loop playsInline controls
+          className="max-h-[85vh] max-w-[90vw] object-contain rounded-lg shadow-glass-lg" />
+      ) : (
+        <img src={images[index]} alt="" onClick={(e) => e.stopPropagation()}
+          className="max-h-[85vh] max-w-[90vw] object-contain rounded-lg shadow-glass-lg" />
+      )}
     </div>
   );
 }

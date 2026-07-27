@@ -35,7 +35,13 @@
       "subtitle": "Ilustración",
       "enabled": true,
       "cover": "",
-      "gallery": []
+      "gallery": [
+        "/trabajos/tatuajes-01.webp",
+        "/trabajos/tatuajes-02.webp",
+        "/trabajos/tatuajes-03.mp4",
+        "/trabajos/tatuajes-04.mp4",
+        "/trabajos/tatuajes-05.webp"
+      ]
     },
     {
       "id": "pinturas",
@@ -51,7 +57,9 @@
       "subtitle": "Dibujo",
       "enabled": true,
       "cover": "",
-      "gallery": []
+      "gallery": [
+        "/trabajos/dibujos-01.mp4"
+      ]
     },
     {
       "id": "foto",

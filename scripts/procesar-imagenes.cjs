@@ -1,38 +1,62 @@
 #!/usr/bin/env node
 /*
- * Procesa por lote las fotos crudas de una categoría y las prepara para el sitio.
+ * Procesa por lote las fotos y VIDEOS crudos de una categoría para el sitio.
  *
  * Uso:
  *   node scripts/procesar-imagenes.cjs <categoria>
  *   node scripts/procesar-imagenes.cjs tatuajes
  *
  * Qué hace:
- *   1. Lee las imágenes de  imagenes-fuente/<categoria>/  (jpg, png, webp, etc.),
- *      ordenadas por nombre de archivo (alfabético).
- *   2. Las convierte a WebP optimizado (máx 1600px del lado mayor, calidad ~82,
- *      igual criterio que el panel admin) y las escribe en  public/trabajos/
- *      como  <categoria>-01.webp, <categoria>-02.webp, ...
- *   3. Actualiza  public/content.json : reemplaza la "gallery" de esa categoría.
- *      NO toca el "cover" (ese lo elegís vos; ver el mapa que imprime al final).
+ *   1. Lee todo de  imagenes-fuente/<categoria>/  (jpg/png/webp + mp4/mov/webm...),
+ *      ordenado por nombre de archivo (alfabético, numérico-aware).
+ *   2. Imágenes -> WebP optimizado (máx 1600px, calidad ~82, como el panel admin).
+ *      Videos   -> MP4 optimizado, SIN AUDIO (-an), máx 1280px del lado mayor,
+ *                  H.264 crf 26, faststart (listo para web).
+ *      Salida en  public/trabajos/  como  <categoria>-01.webp / <categoria>-02.mp4 ...
+ *   3. Actualiza  public/content.json : reemplaza la "gallery" de esa categoría
+ *      (mezcla imágenes y videos en un solo orden). NO toca el "cover".
  *
- * Re-ejecutable: borra sólo los  <categoria>-NN.webp  previos antes de regenerar,
- * así no quedan duplicados. No toca imágenes subidas desde el admin (otros prefijos).
+ * Re-ejecutable: borra sólo los  <categoria>-NN.(webp|mp4)  previos antes de regenerar.
+ * No toca imágenes subidas desde el admin (usan otros prefijos: gal-/cat-).
  */
 const fs = require("fs");
 const path = require("path");
+const { execFileSync } = require("child_process");
 const sharp = require("sharp");
+const ffmpeg = require("ffmpeg-static");
 
 const ROOT = path.resolve(__dirname, "..");
-const MAX_DIM = 1600;
-const MAX_BYTES = 2 * 1024 * 1024; // 2 MB, igual que el admin
-const SRC_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".avif", ".heic", ".heif"]);
+const IMG_MAX_DIM = 1600;
+const IMG_MAX_BYTES = 2 * 1024 * 1024; // 2 MB, igual que el admin
+const VID_MAX_DIM = 1280;
+const IMG_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".avif", ".heic", ".heif"]);
+const VID_EXT = new Set([".mp4", ".mov", ".webm", ".m4v", ".avi", ".mkv"]);
 
-async function encodeUnderLimit(pipeline) {
-  // Escalera de calidad hasta entrar en el límite de bytes (piso 40).
+async function encodeImageUnderLimit(pipeline) {
   for (let q = 82; q >= 40; q -= 8) {
     const buf = await pipeline.clone().webp({ quality: q }).toBuffer();
-    if (buf.length <= MAX_BYTES || q === 40) return { buf, quality: q };
+    if (buf.length <= IMG_MAX_BYTES || q === 40) return { buf, quality: q };
   }
+}
+
+function processVideo(inPath, outPath) {
+  // -an  = descartar TODO el audio (garantía de "sin audio", sin importar el original).
+  // scale: reduce el lado mayor a VID_MAX_DIM sin agrandar; dimensiones pares (H.264).
+  const vf =
+    `scale='if(gt(iw,ih),min(${VID_MAX_DIM},iw),-2)':'if(gt(iw,ih),-2,min(${VID_MAX_DIM},ih))'`;
+  execFileSync(
+    ffmpeg,
+    [
+      "-y", "-loglevel", "error",
+      "-i", inPath,
+      "-an",
+      "-vf", vf,
+      "-c:v", "libx264", "-crf", "26", "-preset", "veryfast",
+      "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+      outPath,
+    ],
+    { stdio: ["ignore", "ignore", "inherit"] }
+  );
 }
 
 async function main() {
@@ -46,44 +70,52 @@ async function main() {
   const outDir = path.join(ROOT, "public", "trabajos");
   if (!fs.existsSync(srcDir)) {
     console.error(`No existe la carpeta de fotos crudas: ${srcDir}`);
-    console.error(`Creala y copiá ahí las fotos de "${categoria}".`);
     process.exit(1);
   }
   fs.mkdirSync(outDir, { recursive: true });
 
-  const files = fs
+  const entries = fs
     .readdirSync(srcDir)
-    .filter((f) => SRC_EXT.has(path.extname(f).toLowerCase()))
-    .sort((a, b) => a.localeCompare(b, "es", { numeric: true, sensitivity: "base" }));
+    .map((f) => ({ f, ext: path.extname(f).toLowerCase() }))
+    .filter((e) => IMG_EXT.has(e.ext) || VID_EXT.has(e.ext))
+    .sort((a, b) => a.f.localeCompare(b.f, "es", { numeric: true, sensitivity: "base" }));
 
-  if (!files.length) {
-    console.error(`No hay imágenes en ${srcDir}. Copiá ahí las fotos y volvé a correr.`);
+  if (!entries.length) {
+    console.error(`No hay imágenes ni videos en ${srcDir}.`);
     process.exit(1);
   }
 
-  // Limpiar salidas previas de esta categoría (sólo <categoria>-NN.webp).
-  const prevRe = new RegExp(`^${categoria}-\\d+\\.webp$`);
+  // Limpiar salidas previas de esta categoría (sólo <categoria>-NN.webp|mp4).
+  const prevRe = new RegExp(`^${categoria}-\\d+\\.(webp|mp4)$`);
   for (const f of fs.readdirSync(outDir)) {
     if (prevRe.test(f)) fs.unlinkSync(path.join(outDir, f));
   }
 
   const gallery = [];
   const mapa = [];
-  const pad = String(files.length).length; // 01..09 o 001..
+  const pad = Math.max(2, String(entries.length).length);
   let i = 0;
-  for (const file of files) {
+  for (const { f, ext } of entries) {
     i += 1;
-    const n = String(i).padStart(Math.max(2, pad), "0");
-    const outName = `${categoria}-${n}.webp`;
-    const pipeline = sharp(path.join(srcDir, file))
-      .rotate() // respeta orientación EXIF
-      .resize({ width: MAX_DIM, height: MAX_DIM, fit: "inside", withoutEnlargement: true });
-    const { buf, quality } = await encodeUnderLimit(pipeline);
-    fs.writeFileSync(path.join(outDir, outName), buf);
+    const n = String(i).padStart(pad, "0");
+    const isVideo = VID_EXT.has(ext);
+    const outName = `${categoria}-${n}.${isVideo ? "mp4" : "webp"}`;
+    const outPath = path.join(outDir, outName);
+
+    if (isVideo) {
+      processVideo(path.join(srcDir, f), outPath);
+    } else {
+      const pipeline = sharp(path.join(srcDir, f))
+        .rotate()
+        .resize({ width: IMG_MAX_DIM, height: IMG_MAX_DIM, fit: "inside", withoutEnlargement: true });
+      const { buf } = await encodeImageUnderLimit(pipeline);
+      fs.writeFileSync(outPath, buf);
+    }
+
+    const kb = (fs.statSync(outPath).size / 1024).toFixed(0);
     const url = `/trabajos/${outName}`;
     gallery.push(url);
-    const kb = (buf.length / 1024).toFixed(0);
-    mapa.push({ n, original: file, salida: outName, url, kb, quality });
+    mapa.push({ n, tipo: isVideo ? "video" : "foto", original: f, salida: outName, kb });
   }
 
   // Actualizar content.json
@@ -92,23 +124,23 @@ async function main() {
   const cat = (content.categories || []).find((c) => c.id === categoria);
   if (!cat) {
     console.error(`\nOJO: no encontré la categoría id="${categoria}" en content.json.`);
-    console.error("Las imágenes se generaron igual en public/trabajos/, pero no toqué el JSON.");
+    console.error("Las salidas se generaron en public/trabajos/, pero no toqué el JSON.");
   } else {
     cat.gallery = gallery;
     fs.writeFileSync(contentPath, JSON.stringify(content, null, 2) + "\n", "utf8");
   }
 
   // Reporte
-  console.log(`\n✓ Procesadas ${files.length} imágenes para "${categoria}"\n`);
-  console.log("  #   original                         → salida            tamaño   q");
-  console.log("  " + "-".repeat(74));
+  console.log(`\n✓ Procesados ${entries.length} archivos para "${categoria}" (videos SIN audio)\n`);
+  console.log("  #   tipo   original                              → salida             tamaño");
+  console.log("  " + "-".repeat(80));
   for (const m of mapa) {
     console.log(
-      `  ${m.n}  ${m.original.padEnd(32).slice(0, 32)} → ${m.salida.padEnd(18)} ${String(m.kb + "KB").padStart(7)}  ${m.quality}`
+      `  ${m.n}  ${m.tipo.padEnd(5)}  ${m.original.padEnd(37).slice(0, 37)} → ${m.salida.padEnd(18)} ${String(m.kb + "KB").padStart(8)}`
     );
   }
-  console.log(`\n  Gallery escrita en content.json (${gallery.length} fotos).`);
-  console.log(`  Para el COVER, decime qué número (#) de la lista usar y lo cargo.\n`);
+  console.log(`\n  Gallery escrita en content.json (${gallery.length} items).`);
+  console.log(`  Para el COVER, decime qué # usar y lo cargo.\n`);
 }
 
 main().catch((e) => {
