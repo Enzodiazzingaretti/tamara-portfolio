@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tamaragonzalez.com/sitemap.xml
+Sitemap: https://tamara-portfolio-xi.vercel.app/sitemap.xml

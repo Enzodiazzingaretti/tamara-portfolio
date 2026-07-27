@@ -33,7 +33,7 @@ export default function SitePanel({ draft, update, advanced = false }) {
             label="Dominio"
             value={s.domain}
             onChange={(v) => update(["site", "domain"], v)}
-            placeholder="tamaragonzalez.com"
+            placeholder="tamara-portfolio-xi.vercel.app"
             hint="Se usa para SEO y enlaces. Normalmente no hace falta cambiarlo."
           />
         </div>

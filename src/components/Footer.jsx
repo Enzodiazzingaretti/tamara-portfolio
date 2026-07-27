@@ -11,7 +11,7 @@ export default function Footer() {
     { label: "Instagram", href: site.socials.instagram },
     { label: "Behance", href: site.socials.behance },
     { label: "Pinterest", href: site.socials.pinterest },
-  ];
+  ].filter((s) => s.href);
   const year = new Date().getFullYear();
 
   return (

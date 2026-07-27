@@ -110,30 +110,23 @@ export default function ContactSection() {
               Sígueme
             </p>
             <div className="flex flex-col gap-3 text-sm">
-              <a
-                href={site.socials.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cream/85 hover:text-dusty transition-colors uppercase tracking-wide"
-              >
-                Instagram
-              </a>
-              <a
-                href={site.socials.behance}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cream/85 hover:text-dusty transition-colors uppercase tracking-wide"
-              >
-                Behance
-              </a>
-              <a
-                href={site.socials.pinterest}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cream/85 hover:text-dusty transition-colors uppercase tracking-wide"
-              >
-                Pinterest
-              </a>
+              {[
+                { label: "Instagram", href: site.socials.instagram },
+                { label: "Behance", href: site.socials.behance },
+                { label: "Pinterest", href: site.socials.pinterest },
+              ]
+                .filter((s) => s.href)
+                .map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-cream/85 hover:text-dusty transition-colors uppercase tracking-wide"
+                  >
+                    {s.label}
+                  </a>
+                ))}
             </div>
           </motion.div>
         </motion.div>
