@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Flower2 } from "lucide-react";
 import { fadeUp } from "../utils/animations";
 import { useContent } from "../ContentContext";
 import Monogram from "./Monogram";
@@ -33,9 +34,10 @@ export default function Footer() {
               <a
                 href="/admin"
                 aria-label="Panel de administración"
-                className="text-mauve/40 hover:text-dusty transition-colors duration-500"
+                title="Panel"
+                className="inline-flex items-center align-middle ml-1 text-mauve/35 hover:text-dusty transition-colors duration-500"
               >
-                · Panel
+                <Flower2 size={13} strokeWidth={1.5} />
               </a>
             </p>
           </motion.div>
