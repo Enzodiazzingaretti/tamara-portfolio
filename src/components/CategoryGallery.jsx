@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { X, Play, Images, Plus } from "lucide-react";
 import Lightbox from "./Lightbox";
@@ -79,7 +80,7 @@ export default function CategoryGallery({ category, onClose }) {
     ? (count === 1 ? "proyecto" : "proyectos")
     : (count === 1 ? "obra" : "obras");
 
-  return (
+  return createPortal(
     <motion.div
       role="dialog"
       aria-modal="true"
@@ -150,6 +151,7 @@ export default function CategoryGallery({ category, onClose }) {
       {lightboxIndex !== null && (
         <Lightbox images={legacyImages} index={lightboxIndex} onClose={() => setLightboxIndex(null)} onIndexChange={setLightboxIndex} />
       )}
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }

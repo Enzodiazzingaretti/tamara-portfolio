@@ -21,7 +21,7 @@
     "contact": true
   },
   "hero": {
-    "image": ""
+    "image": "/trabajos/hero-tamara.webp"
   },
   "about": {
     "intro": "Soy artista visual. Trabajo entre el tatuaje, la ilustración y la pintura, buscando en cada pieza una forma de contar historias que perduran.",
@@ -226,17 +226,8 @@
       "title": "Foto mía",
       "subtitle": "Fotografía",
       "enabled": true,
-      "cover": "/trabajos/foto/tamara-01.webp",
-      "projects": [
-        {
-          "id": "tamara",
-          "title": "Tamara",
-          "cover": "/trabajos/foto/tamara-01.webp",
-          "media": [
-            "/trabajos/foto/tamara-01.webp"
-          ]
-        }
-      ]
+      "cover": "",
+      "projects": []
     }
   ],
   "services": [

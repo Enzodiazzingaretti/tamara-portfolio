@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { isVideo } from "../utils/media";
 
@@ -18,7 +19,7 @@ export default function Lightbox({ images, index, onClose, onIndexChange }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, images.length]);
 
-  return (
+  return createPortal(
     <div role="dialog" aria-modal="true" aria-label="Galería" onClick={onClose}
       className="fixed inset-0 z-[100] bg-noir/95 backdrop-blur grid place-items-center p-6">
       <button
@@ -54,6 +55,7 @@ export default function Lightbox({ images, index, onClose, onIndexChange }) {
         <img src={images[index]} alt="" onClick={(e) => e.stopPropagation()}
           className="max-h-[85vh] max-w-[90vw] object-contain rounded-lg shadow-glass-lg" />
       )}
-    </div>
+    </div>,
+    document.body
   );
 }

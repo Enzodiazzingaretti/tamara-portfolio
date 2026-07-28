@@ -12,7 +12,7 @@ const HERO_LINKS = [
 ];
 
 export default function HeroSection() {
-  const { site } = useContent();
+  const { site, hero } = useContent();
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
@@ -106,14 +106,24 @@ export default function HeroSection() {
             className="relative flex justify-center lg:justify-end"
           >
             <div className="relative w-full max-w-sm lg:max-w-md aspect-[3/4]">
-              <div className="absolute inset-0 rounded-[2rem] glass art-placeholder overflow-hidden flex flex-col items-center justify-center gap-4">
-                <span className="font-serif text-[7rem] leading-none text-dusty/20 italic select-none">
-                  T
-                </span>
-                <span className="text-[10px] uppercase tracking-editorial text-mauve/60">
-                  Foto mía
-                </span>
-              </div>
+              {hero?.image ? (
+                <div className="absolute inset-0 rounded-[2rem] glass overflow-hidden">
+                  <img
+                    src={hero.image}
+                    alt={site.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="absolute inset-0 rounded-[2rem] glass art-placeholder overflow-hidden flex flex-col items-center justify-center gap-4">
+                  <span className="font-serif text-[7rem] leading-none text-dusty/20 italic select-none">
+                    T
+                  </span>
+                  <span className="text-[10px] uppercase tracking-editorial text-mauve/60">
+                    Foto mía
+                  </span>
+                </div>
+              )}
               <div className="absolute -bottom-4 -right-4 w-28 h-28 rounded-br-[2rem] border-r border-b border-dusty/30" />
             </div>
 

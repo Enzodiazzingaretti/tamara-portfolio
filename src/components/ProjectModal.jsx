@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { X, Play, ArrowLeft } from "lucide-react";
 import Lightbox from "./Lightbox";
@@ -31,7 +32,7 @@ export default function ProjectModal({ project, onClose }) {
     else setLightboxIndex(null);
   };
 
-  return (
+  return createPortal(
     <motion.div
       role="dialog"
       aria-modal="true"
@@ -108,6 +109,7 @@ export default function ProjectModal({ project, onClose }) {
           onIndexChange={setLightboxIndex}
         />
       )}
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }
