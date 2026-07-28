@@ -25,10 +25,10 @@ export const DEFAULTS = {
     image: "",
   },
   categories: [
-    { id: "tatuajes", title: "Tatuajes", subtitle: "Ilustración", description: "", enabled: true, cover: "", gallery: [] },
-    { id: "pinturas", title: "Pinturas", subtitle: "Pintura", description: "", enabled: true, cover: "", gallery: [] },
-    { id: "dibujos", title: "Dibujos", subtitle: "Dibujo", description: "", enabled: true, cover: "", gallery: [] },
-    { id: "foto", title: "Foto mía", subtitle: "Fotografía", description: "", enabled: true, cover: "", gallery: [] },
+    { id: "tatuajes", title: "Tatuajes", subtitle: "Ilustración", description: "", enabled: true, cover: "", projects: [] },
+    { id: "pinturas", title: "Pinturas", subtitle: "Pintura", description: "", enabled: true, cover: "", projects: [] },
+    { id: "dibujos", title: "Dibujos", subtitle: "Dibujo", description: "", enabled: true, cover: "", projects: [] },
+    { id: "foto", title: "Foto mía", subtitle: "Fotografía", description: "", enabled: true, cover: "", projects: [] },
   ],
   services: [
     { id: "marketing", title: "Marketing & Branding", description: "Estrategias creativas que conectan marcas con personas y generan impacto.", icon: "Sparkle", enabled: true },

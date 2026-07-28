@@ -1,23 +1,26 @@
 #!/usr/bin/env node
 /*
- * Procesa por lote las fotos y VIDEOS crudos de una categoría para el sitio.
+ * Procesa por lote una categoría organizada en PROYECTOS (subcarpetas).
  *
  * Uso:
  *   node scripts/procesar-imagenes.cjs <categoria>
  *   node scripts/procesar-imagenes.cjs tatuajes
  *
- * Qué hace:
- *   1. Lee todo de  imagenes-fuente/<categoria>/  (jpg/png/webp + mp4/mov/webm...),
- *      ordenado por nombre de archivo (alfabético, numérico-aware).
- *   2. Imágenes -> WebP optimizado (máx 1600px, calidad ~82, como el panel admin).
- *      Videos   -> MP4 optimizado, SIN AUDIO (-an), máx 1280px del lado mayor,
- *                  H.264 crf 26, faststart (listo para web).
- *      Salida en  public/trabajos/  como  <categoria>-01.webp / <categoria>-02.mp4 ...
- *   3. Actualiza  public/content.json : reemplaza la "gallery" de esa categoría
- *      (mezcla imágenes y videos en un solo orden). NO toca el "cover".
+ * Estructura esperada:
+ *   imagenes-fuente/<categoria>/<proyecto>/<archivos...>   (una subcarpeta = un trabajo)
+ *   imagenes-fuente/<categoria>/proyectos.json  (opcional: orden + títulos)
+ *       [ { "folder": "sirena", "title": "Sirena" }, ... ]
+ *   Si no hay proyectos.json, cada subcarpeta es un proyecto (título = nombre de carpeta)
+ *   y los archivos sueltos en la raíz de la categoría son proyectos de una sola pieza.
  *
- * Re-ejecutable: borra sólo los  <categoria>-NN.(webp|mp4)  previos antes de regenerar.
- * No toca imágenes subidas desde el admin (usan otros prefijos: gal-/cat-).
+ * Dentro de cada proyecto: el 1º archivo (orden alfabético; prefijá "0_" para forzar
+ * portada) es el COVER; el resto va en "media". Imágenes -> WebP (máx 1600px, ~q82);
+ * videos -> MP4 SIN audio (-an, máx 1280px, H.264 crf 26, faststart).
+ *
+ * Salida: public/trabajos/<categoria>/<proyecto>-NN.(webp|mp4)
+ * Escribe en content.json:  categoria.projects = [{id,title,cover,media[]}]
+ *                           categoria.cover     = cover del 1er proyecto
+ *                           (borra la vieja categoria.gallery plana)
  */
 const fs = require("fs");
 const path = require("path");
@@ -26,124 +29,122 @@ const sharp = require("sharp");
 const ffmpeg = require("ffmpeg-static");
 
 const ROOT = path.resolve(__dirname, "..");
-const IMG_MAX_DIM = 1600;
-const IMG_MAX_BYTES = 2 * 1024 * 1024; // 2 MB, igual que el admin
+const IMG_MAX_DIM = 1600, IMG_MAX_BYTES = 2 * 1024 * 1024;
 const VID_MAX_DIM = 1280;
 const IMG_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".avif", ".heic", ".heif"]);
 const VID_EXT = new Set([".mp4", ".mov", ".webm", ".m4v", ".avi", ".mkv"]);
 
+const cmp = (a, b) => a.localeCompare(b, "es", { numeric: true, sensitivity: "base" });
+const isMedia = (f) => IMG_EXT.has(path.extname(f).toLowerCase()) || VID_EXT.has(path.extname(f).toLowerCase());
+
 async function encodeImageUnderLimit(pipeline) {
   for (let q = 82; q >= 40; q -= 8) {
     const buf = await pipeline.clone().webp({ quality: q }).toBuffer();
-    if (buf.length <= IMG_MAX_BYTES || q === 40) return { buf, quality: q };
+    if (buf.length <= IMG_MAX_BYTES || q === 40) return buf;
   }
 }
 
 function processVideo(inPath, outPath) {
-  // -an  = descartar TODO el audio (garantía de "sin audio", sin importar el original).
-  // scale: reduce el lado mayor a VID_MAX_DIM sin agrandar; dimensiones pares (H.264).
-  const vf =
-    `scale='if(gt(iw,ih),min(${VID_MAX_DIM},iw),-2)':'if(gt(iw,ih),-2,min(${VID_MAX_DIM},ih))'`;
-  execFileSync(
-    ffmpeg,
-    [
-      "-y", "-loglevel", "error",
-      "-i", inPath,
-      "-an",
-      "-vf", vf,
-      "-c:v", "libx264", "-crf", "26", "-preset", "veryfast",
-      "-pix_fmt", "yuv420p", "-movflags", "+faststart",
-      outPath,
-    ],
-    { stdio: ["ignore", "ignore", "inherit"] }
-  );
+  const vf = `scale='if(gt(iw,ih),min(${VID_MAX_DIM},iw),-2)':'if(gt(iw,ih),-2,min(${VID_MAX_DIM},ih))'`;
+  execFileSync(ffmpeg, [
+    "-y", "-loglevel", "error", "-i", inPath, "-an", "-vf", vf,
+    "-c:v", "libx264", "-crf", "26", "-preset", "veryfast",
+    "-pix_fmt", "yuv420p", "-movflags", "+faststart", outPath,
+  ], { stdio: ["ignore", "ignore", "inherit"] });
+}
+
+// Lista de proyectos: usa proyectos.json si existe; si no, autodetecta.
+function readProjects(srcDir) {
+  const manifestPath = path.join(srcDir, "proyectos.json");
+  if (fs.existsSync(manifestPath)) {
+    const list = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+    return list.map((p) => ({ folder: p.folder, title: p.title || p.folder }));
+  }
+  const out = [];
+  for (const e of fs.readdirSync(srcDir, { withFileTypes: true }).sort((a, b) => cmp(a.name, b.name))) {
+    if (e.isDirectory()) out.push({ folder: e.name, title: e.name });
+    else if (e.isFile() && isMedia(e.name)) out.push({ folder: null, file: e.name, title: path.parse(e.name).name });
+  }
+  return out;
+}
+
+async function processMedia(inPath, outPath, isVideo) {
+  if (isVideo) {
+    processVideo(inPath, outPath);
+  } else {
+    const buf = await encodeImageUnderLimit(
+      sharp(inPath).rotate().resize({ width: IMG_MAX_DIM, height: IMG_MAX_DIM, fit: "inside", withoutEnlargement: true })
+    );
+    fs.writeFileSync(outPath, buf);
+  }
+  return (fs.statSync(outPath).size / 1024).toFixed(0);
 }
 
 async function main() {
   const categoria = (process.argv[2] || "").trim();
   if (!categoria || !/^[a-z0-9-]+$/.test(categoria)) {
-    console.error("Uso: node scripts/procesar-imagenes.cjs <categoria>  (ej. tatuajes)");
+    console.error("Uso: node scripts/procesar-imagenes.cjs <categoria>");
     process.exit(1);
   }
-
   const srcDir = path.join(ROOT, "imagenes-fuente", categoria);
-  const outDir = path.join(ROOT, "public", "trabajos");
-  if (!fs.existsSync(srcDir)) {
-    console.error(`No existe la carpeta de fotos crudas: ${srcDir}`);
-    process.exit(1);
-  }
+  const outDir = path.join(ROOT, "public", "trabajos", categoria);
+  if (!fs.existsSync(srcDir)) { console.error(`No existe: ${srcDir}`); process.exit(1); }
+
+  // Limpieza: subcarpeta de la categoría + viejos archivos planos <cat>-NN.* (modelo anterior).
+  fs.rmSync(outDir, { recursive: true, force: true });
   fs.mkdirSync(outDir, { recursive: true });
-
-  const entries = fs
-    .readdirSync(srcDir)
-    .map((f) => ({ f, ext: path.extname(f).toLowerCase() }))
-    .filter((e) => IMG_EXT.has(e.ext) || VID_EXT.has(e.ext))
-    .sort((a, b) => a.f.localeCompare(b.f, "es", { numeric: true, sensitivity: "base" }));
-
-  if (!entries.length) {
-    console.error(`No hay imágenes ni videos en ${srcDir}.`);
-    process.exit(1);
+  const flatRe = new RegExp(`^${categoria}-\\d+\\.(webp|mp4)$`);
+  const trabajosRoot = path.join(ROOT, "public", "trabajos");
+  for (const f of fs.readdirSync(trabajosRoot)) {
+    if (flatRe.test(f)) fs.unlinkSync(path.join(trabajosRoot, f));
   }
 
-  // Limpiar salidas previas de esta categoría (sólo <categoria>-NN.webp|mp4).
-  const prevRe = new RegExp(`^${categoria}-\\d+\\.(webp|mp4)$`);
-  for (const f of fs.readdirSync(outDir)) {
-    if (prevRe.test(f)) fs.unlinkSync(path.join(outDir, f));
-  }
+  const projects = readProjects(srcDir);
+  const outProjects = [];
+  const report = [];
 
-  const gallery = [];
-  const mapa = [];
-  const pad = Math.max(2, String(entries.length).length);
-  let i = 0;
-  for (const { f, ext } of entries) {
-    i += 1;
-    const n = String(i).padStart(pad, "0");
-    const isVideo = VID_EXT.has(ext);
-    const outName = `${categoria}-${n}.${isVideo ? "mp4" : "webp"}`;
-    const outPath = path.join(outDir, outName);
+  for (const p of projects) {
+    const slug = p.folder || path.parse(p.file).name.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+    const files = p.folder
+      ? fs.readdirSync(path.join(srcDir, p.folder)).filter(isMedia).sort(cmp)
+      : [p.file];
+    const baseDir = p.folder ? path.join(srcDir, p.folder) : srcDir;
 
-    if (isVideo) {
-      processVideo(path.join(srcDir, f), outPath);
-    } else {
-      const pipeline = sharp(path.join(srcDir, f))
-        .rotate()
-        .resize({ width: IMG_MAX_DIM, height: IMG_MAX_DIM, fit: "inside", withoutEnlargement: true });
-      const { buf } = await encodeImageUnderLimit(pipeline);
-      fs.writeFileSync(outPath, buf);
+    const media = [];
+    let i = 0;
+    for (const f of files) {
+      i += 1;
+      const isVideo = VID_EXT.has(path.extname(f).toLowerCase());
+      const outName = `${slug}-${String(i).padStart(2, "0")}.${isVideo ? "mp4" : "webp"}`;
+      const kb = await processMedia(path.join(baseDir, f), path.join(outDir, outName), isVideo);
+      media.push(`/trabajos/${categoria}/${outName}`);
+      report.push({ proj: p.title, tipo: isVideo ? "video" : "foto", src: f, out: outName, kb });
     }
-
-    const kb = (fs.statSync(outPath).size / 1024).toFixed(0);
-    const url = `/trabajos/${outName}`;
-    gallery.push(url);
-    mapa.push({ n, tipo: isVideo ? "video" : "foto", original: f, salida: outName, kb });
+    outProjects.push({ id: slug, title: p.title, cover: media[0], media });
   }
 
-  // Actualizar content.json
+  // content.json
   const contentPath = path.join(ROOT, "public", "content.json");
   const content = JSON.parse(fs.readFileSync(contentPath, "utf8"));
   const cat = (content.categories || []).find((c) => c.id === categoria);
   if (!cat) {
     console.error(`\nOJO: no encontré la categoría id="${categoria}" en content.json.`);
-    console.error("Las salidas se generaron en public/trabajos/, pero no toqué el JSON.");
   } else {
-    cat.gallery = gallery;
+    cat.projects = outProjects;
+    cat.cover = outProjects[0]?.cover || "";
+    delete cat.gallery;
     fs.writeFileSync(contentPath, JSON.stringify(content, null, 2) + "\n", "utf8");
   }
 
   // Reporte
-  console.log(`\n✓ Procesados ${entries.length} archivos para "${categoria}" (videos SIN audio)\n`);
-  console.log("  #   tipo   original                              → salida             tamaño");
-  console.log("  " + "-".repeat(80));
-  for (const m of mapa) {
-    console.log(
-      `  ${m.n}  ${m.tipo.padEnd(5)}  ${m.original.padEnd(37).slice(0, 37)} → ${m.salida.padEnd(18)} ${String(m.kb + "KB").padStart(8)}`
-    );
+  const totalMedia = report.length;
+  console.log(`\n✓ "${categoria}": ${outProjects.length} proyectos, ${totalMedia} archivos (videos sin audio)\n`);
+  for (const pr of outProjects) {
+    const nVid = pr.media.filter((m) => m.endsWith(".mp4")).length;
+    const extra = pr.media.length > 1 ? ` (${pr.media.length} archivos${nVid ? `, ${nVid} video` : ""})` : "";
+    console.log(`  • ${pr.title}${extra}  → cover ${path.basename(pr.cover)}`);
   }
-  console.log(`\n  Gallery escrita en content.json (${gallery.length} items).`);
-  console.log(`  Para el COVER, decime qué # usar y lo cargo.\n`);
+  console.log(`\n  Portada de la categoría: ${path.basename(cat?.cover || "")}\n`);
 }
 
-main().catch((e) => {
-  console.error("Error:", e.message);
-  process.exit(1);
-});
+main().catch((e) => { console.error("Error:", e.message); process.exit(1); });

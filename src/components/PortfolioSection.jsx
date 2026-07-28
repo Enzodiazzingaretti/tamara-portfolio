@@ -7,7 +7,7 @@ import { isVideo } from "../utils/media";
 import CategoryGallery from "./CategoryGallery";
 
 function CardInner({ item, index }) {
-  const cover = item.cover || item.gallery?.[0] || "";
+  const cover = item.cover || item.projects?.[0]?.cover || item.projects?.[0]?.media?.[0] || item.gallery?.[0] || "";
   const coverClass =
     "absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105";
   return (
@@ -53,7 +53,7 @@ function WorkCard({ item, index, instagram, onOpen }) {
   const cardClass =
     "group relative block w-full text-left rounded-2xl overflow-hidden glass hover:[border-color:rgba(207,163,171,0.3)] hover:shadow-glass-lg transition-all duration-500";
 
-  if (item.gallery?.length) {
+  if (item.projects?.length || item.gallery?.length) {
     return (
       <motion.button type="button" variants={scaleIn} onClick={onOpen} className={cardClass}>
         <CardInner item={item} index={index} />

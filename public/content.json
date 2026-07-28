@@ -34,13 +34,158 @@
       "title": "Tatuajes",
       "subtitle": "Ilustración",
       "enabled": true,
-      "cover": "",
-      "gallery": [
-        "/trabajos/tatuajes-01.webp",
-        "/trabajos/tatuajes-02.webp",
-        "/trabajos/tatuajes-03.mp4",
-        "/trabajos/tatuajes-04.mp4",
-        "/trabajos/tatuajes-05.webp"
+      "cover": "/trabajos/tatuajes/virgen-01.webp",
+      "projects": [
+        {
+          "id": "virgen",
+          "title": "Virgen",
+          "cover": "/trabajos/tatuajes/virgen-01.webp",
+          "media": [
+            "/trabajos/tatuajes/virgen-01.webp"
+          ]
+        },
+        {
+          "id": "sirena",
+          "title": "Sirena",
+          "cover": "/trabajos/tatuajes/sirena-01.webp",
+          "media": [
+            "/trabajos/tatuajes/sirena-01.webp",
+            "/trabajos/tatuajes/sirena-02.webp",
+            "/trabajos/tatuajes/sirena-03.webp"
+          ]
+        },
+        {
+          "id": "mascara",
+          "title": "Máscara",
+          "cover": "/trabajos/tatuajes/mascara-01.webp",
+          "media": [
+            "/trabajos/tatuajes/mascara-01.webp",
+            "/trabajos/tatuajes/mascara-02.webp",
+            "/trabajos/tatuajes/mascara-03.webp"
+          ]
+        },
+        {
+          "id": "delfin",
+          "title": "Delfín",
+          "cover": "/trabajos/tatuajes/delfin-01.webp",
+          "media": [
+            "/trabajos/tatuajes/delfin-01.webp",
+            "/trabajos/tatuajes/delfin-02.webp"
+          ]
+        },
+        {
+          "id": "rana",
+          "title": "Rana",
+          "cover": "/trabajos/tatuajes/rana-01.webp",
+          "media": [
+            "/trabajos/tatuajes/rana-01.webp",
+            "/trabajos/tatuajes/rana-02.mp4"
+          ]
+        },
+        {
+          "id": "benjamin",
+          "title": "Benjamín",
+          "cover": "/trabajos/tatuajes/benjamin-01.webp",
+          "media": [
+            "/trabajos/tatuajes/benjamin-01.webp"
+          ]
+        },
+        {
+          "id": "dragon",
+          "title": "Dragón",
+          "cover": "/trabajos/tatuajes/dragon-01.webp",
+          "media": [
+            "/trabajos/tatuajes/dragon-01.webp"
+          ]
+        },
+        {
+          "id": "mandala",
+          "title": "Mandala",
+          "cover": "/trabajos/tatuajes/mandala-01.mp4",
+          "media": [
+            "/trabajos/tatuajes/mandala-01.mp4"
+          ]
+        },
+        {
+          "id": "chems",
+          "title": "Chems",
+          "cover": "/trabajos/tatuajes/chems-01.webp",
+          "media": [
+            "/trabajos/tatuajes/chems-01.webp"
+          ]
+        },
+        {
+          "id": "chily",
+          "title": "Chily",
+          "cover": "/trabajos/tatuajes/chily-01.webp",
+          "media": [
+            "/trabajos/tatuajes/chily-01.webp"
+          ]
+        },
+        {
+          "id": "choso",
+          "title": "Choso (Jujutsu Kaisen)",
+          "cover": "/trabajos/tatuajes/choso-01.webp",
+          "media": [
+            "/trabajos/tatuajes/choso-01.webp"
+          ]
+        },
+        {
+          "id": "codo",
+          "title": "Codo full color",
+          "cover": "/trabajos/tatuajes/codo-01.webp",
+          "media": [
+            "/trabajos/tatuajes/codo-01.webp"
+          ]
+        },
+        {
+          "id": "frutilla",
+          "title": "Frutilla",
+          "cover": "/trabajos/tatuajes/frutilla-01.webp",
+          "media": [
+            "/trabajos/tatuajes/frutilla-01.webp"
+          ]
+        },
+        {
+          "id": "nota-musical",
+          "title": "Nota musical",
+          "cover": "/trabajos/tatuajes/nota-musical-01.webp",
+          "media": [
+            "/trabajos/tatuajes/nota-musical-01.webp"
+          ]
+        },
+        {
+          "id": "ojo",
+          "title": "Ojo",
+          "cover": "/trabajos/tatuajes/ojo-01.webp",
+          "media": [
+            "/trabajos/tatuajes/ojo-01.webp"
+          ]
+        },
+        {
+          "id": "sol-y-luna",
+          "title": "Sol y luna",
+          "cover": "/trabajos/tatuajes/sol-y-luna-01.webp",
+          "media": [
+            "/trabajos/tatuajes/sol-y-luna-01.webp"
+          ]
+        },
+        {
+          "id": "texto-espalda",
+          "title": "Texto",
+          "cover": "/trabajos/tatuajes/texto-espalda-01.webp",
+          "media": [
+            "/trabajos/tatuajes/texto-espalda-01.webp"
+          ]
+        },
+        {
+          "id": "detalle",
+          "title": "Detalle",
+          "cover": "/trabajos/tatuajes/detalle-01.webp",
+          "media": [
+            "/trabajos/tatuajes/detalle-01.webp"
+          ]
+        }
       ]
     },
     {
@@ -56,9 +201,24 @@
       "title": "Dibujos",
       "subtitle": "Dibujo",
       "enabled": true,
-      "cover": "",
-      "gallery": [
-        "/trabajos/dibujos-01.mp4"
+      "cover": "/trabajos/dibujos/rana-01.mp4",
+      "projects": [
+        {
+          "id": "rana",
+          "title": "Rana",
+          "cover": "/trabajos/dibujos/rana-01.mp4",
+          "media": [
+            "/trabajos/dibujos/rana-01.mp4"
+          ]
+        },
+        {
+          "id": "ilustracion",
+          "title": "Ilustración",
+          "cover": "/trabajos/dibujos/ilustracion-01.webp",
+          "media": [
+            "/trabajos/dibujos/ilustracion-01.webp"
+          ]
+        }
       ]
     },
     {
@@ -66,8 +226,17 @@
       "title": "Foto mía",
       "subtitle": "Fotografía",
       "enabled": true,
-      "cover": "",
-      "gallery": []
+      "cover": "/trabajos/foto/tamara-01.webp",
+      "projects": [
+        {
+          "id": "tamara",
+          "title": "Tamara",
+          "cover": "/trabajos/foto/tamara-01.webp",
+          "media": [
+            "/trabajos/foto/tamara-01.webp"
+          ]
+        }
+      ]
     }
   ],
   "services": [
