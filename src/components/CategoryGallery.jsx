@@ -55,7 +55,7 @@ function ProjectTile({ project, index, onOpen }) {
 // Retrocompatible: si la categoría no tiene projects pero sí gallery, muestra el
 // masonry plano (comportamiento anterior).
 export default function CategoryGallery({ category, onClose }) {
-  const projects = category.projects || [];
+  const projects = (category.projects || []).filter((p) => p.enabled !== false);
   const legacyImages = category.gallery || [];
   const useProjects = projects.length > 0;
   const [openProject, setOpenProject] = useState(null);

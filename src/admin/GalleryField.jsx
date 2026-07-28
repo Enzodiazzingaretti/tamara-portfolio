@@ -3,6 +3,7 @@ import { ImagePlus, ArrowLeft, ArrowRight, X, Loader2 } from "lucide-react";
 import { compressImage } from "../lib/compressImage";
 import { uploadImage } from "./api";
 import { move, removeAt } from "./ReorderableList";
+import { isVideo } from "../utils/media";
 
 const SOFT_MAX = 30;
 
@@ -39,7 +40,11 @@ export default function GalleryField({ slot, images, onChange }) {
         <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-3">
           {list.map((url, i) => (
             <div key={url} className="relative group aspect-square rounded-lg overflow-hidden border border-plum/60">
-              <img src={url} alt="" className="w-full h-full object-cover" />
+              {isVideo(url) ? (
+                <video src={url} className="w-full h-full object-cover" muted loop playsInline preload="metadata" />
+              ) : (
+                <img src={url} alt="" className="w-full h-full object-cover" />
+              )}
               <div className="absolute inset-0 flex items-center justify-between px-1 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-t from-noir/85 via-noir/20 to-noir/40">
                 <button
                   type="button" aria-label="Mover antes"
