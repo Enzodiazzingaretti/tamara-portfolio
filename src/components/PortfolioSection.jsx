@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useContent } from "../ContentContext";
 import { fadeUp, scaleIn } from "../utils/animations";
 import { isVideo } from "../utils/media";
+import SmartImage from "./SmartImage";
 import CategoryGallery from "./CategoryGallery";
 
 function CardInner({ item, index }) {
@@ -25,7 +26,7 @@ function CardInner({ item, index }) {
             preload="metadata"
           />
         ) : (
-          <img src={cover} alt={item.title} loading="lazy" className={coverClass} />
+          <SmartImage src={cover} alt={item.title} className={coverClass} />
         )
       )}
       {/* index */}

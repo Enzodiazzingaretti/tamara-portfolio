@@ -30,6 +30,7 @@ const ffmpeg = require("ffmpeg-static");
 
 const ROOT = path.resolve(__dirname, "..");
 const IMG_MAX_DIM = 1600, IMG_MAX_BYTES = 2 * 1024 * 1024;
+const THUMB_DIM = 600, THUMB_QUALITY = 70; // miniatura para tiles/portadas/grid
 const VID_MAX_DIM = 1280;
 const IMG_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".avif", ".heic", ".heif"]);
 const VID_EXT = new Set([".mp4", ".mov", ".webm", ".m4v", ".avi", ".mkv"]);
@@ -76,6 +77,13 @@ async function processMedia(inPath, outPath, isVideo) {
       sharp(inPath).rotate().resize({ width: IMG_MAX_DIM, height: IMG_MAX_DIM, fit: "inside", withoutEnlargement: true })
     );
     fs.writeFileSync(outPath, buf);
+    // Miniatura (mismo nombre + "-thumb"): la usan tiles/portadas/grid; el full va al lightbox.
+    const thumb = outPath.replace(/\.webp$/i, "-thumb.webp");
+    await sharp(inPath)
+      .rotate()
+      .resize({ width: THUMB_DIM, height: THUMB_DIM, fit: "inside", withoutEnlargement: true })
+      .webp({ quality: THUMB_QUALITY })
+      .toFile(thumb);
   }
   return (fs.statSync(outPath).size / 1024).toFixed(0);
 }

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { X, Play, Images, Plus } from "lucide-react";
 import Lightbox from "./Lightbox";
 import ProjectModal from "./ProjectModal";
+import SmartImage from "./SmartImage";
 import { isVideo } from "../utils/media";
 
 // Tile de un proyecto dentro del modal de categoría.
@@ -27,10 +28,8 @@ function ProjectTile({ project, index, onOpen }) {
             autoPlay muted loop playsInline preload="metadata"
           />
         ) : (
-          <img
+          <SmartImage
             src={cover}
-            alt=""
-            loading="lazy"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
         ))}
@@ -135,7 +134,7 @@ export default function CategoryGallery({ category, onClose }) {
                 {isVideo(url) ? (
                   <video src={url} className="w-full h-auto object-cover" autoPlay muted loop playsInline preload="metadata" />
                 ) : (
-                  <img src={url} alt={`${category.title} ${i + 1}`} loading="lazy" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+                  <SmartImage src={url} alt={`${category.title} ${i + 1}`} className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
                 )}
               </motion.button>
             ))}

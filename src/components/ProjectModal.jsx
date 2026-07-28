@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { X, Play, ArrowLeft } from "lucide-react";
 import Lightbox from "./Lightbox";
+import SmartImage from "./SmartImage";
 import { isVideo } from "../utils/media";
 
 // Modal de un proyecto: muestra todas sus fotos/videos en un grid.
@@ -88,10 +89,9 @@ export default function ProjectModal({ project, onClose }) {
                     </span>
                   </>
                 ) : (
-                  <img
+                  <SmartImage
                     src={url}
                     alt={`${project.title} ${i + 1}`}
-                    loading="lazy"
                     className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
                 )}

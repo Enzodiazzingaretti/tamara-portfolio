@@ -111,6 +111,9 @@ export default function HeroSection() {
                   <img
                     src={hero.image}
                     alt={site.name}
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
                 </div>
